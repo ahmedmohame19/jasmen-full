@@ -1,5 +1,16 @@
 {
   "general": {
+    "deleteUserMessage": "Are you sure you want to delete this user?",
+    "errorTitle": "Something went wrong",
+    "errorMessage": "An unexpected error occurred. Reload the page to continue.",
+    "reload": "Reload",
+    "notAvailable": "N/A",
+    "quality": "Quality",
+    "goBack": "Go back",
+    "toggleMenu": "Toggle menu",
+    "close": "Close",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
     "arabic": "Arabic",
     "english": "English",
     "email": "Email",
@@ -72,6 +83,7 @@
     "minValue": "Value must be greater than or equal to 0"
   },
   "sidebar": {
+    "map": "Buildings map",
     "dashboard": "Dashboard",
     "users": "Users",
     "buildings": "Buildings",
@@ -84,6 +96,13 @@
   },
 
   "users": {
+    "whatsAppNumber": "WhatsApp number",
+    "noCharges": "No charges yet",
+    "seasonalPattern": "Seasonal pattern",
+    "pumpUtilizationRate": "Pump utilization rate",
+    "value": "Value",
+    "recommendationsTooltip": "Suggested actions based on the analysis",
+    "stable": "Stable",
     "users": "All users",
     "createUser": "Create a new user",
     "mobile": "Mobile",
@@ -508,6 +527,7 @@
     "title": "Your account"
   },
   "descriptions": {
+    "updateSettings": "Update the system settings",
     "translateBtn": "Arabic and english toggle button",
     "toggleLightAndDark": "Dark and light mode toggle button",
     "adminIcon": "Admin profile link",
@@ -533,6 +553,7 @@
     "year": "This year"
   },
   "buildings": {
+    "deleteBuilding": "Delete building",
     "buildings": "All buildings",
     "createBuilding": "Create a new building",
     "editBuilding": "Edit building",
@@ -576,5 +597,75 @@
     "noUnassignedUsers": "No unassigned users found",
     "assign": "Assign",
     "createUser": "Create User"
+  },
+  "connection": {
+    "title": "Live connection",
+    "connected": "Live",
+    "reconnecting": "Reconnecting",
+    "offline": "Offline",
+    "mock": "Demo data"
+  },
+  "map": {
+    "subtitle": "{{units}} units across {{buildings}} buildings",
+    "health": "Network health",
+    "view": {
+      "label": "Map view",
+      "skyline": "Skyline",
+      "cards": "Cards"
+    },
+    "alerts": {
+      "title": "Possible leaks"
+    },
+    "unit": {
+      "room": "Room",
+      "balance": "Balance"
+    },
+    "title": "Buildings map",
+    "status": {
+      "leak": "Leak suspected",
+      "inactive": "Inactive",
+      "low": "Low balance",
+      "ok": "Normal"
+    },
+    "legend": {
+      "title": "Status legend",
+      "leak": "Possible water leak (flashing)",
+      "inactive": "Valve closed or device offline",
+      "low": "Balance is about to run out",
+      "ok": "Working normally"
+    },
+    "reason": {
+      "valveClosed": "Valve closed",
+      "offline": "Device offline"
+    },
+    "filter": {
+      "label": "Filter by status",
+      "all": "All"
+    },
+    "threshold": {
+      "label": "Low balance threshold (%)"
+    },
+    "summary": {
+      "title": "Status summary"
+    },
+    "noUnits": "No units",
+    "noMatches": "No buildings match this filter"
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "ocean": "Ocean"
+  },
+  "brand": {
+    "name": "Kemetrics",
+    "tagline": "Smart Water Anytime",
+    "welcome": "Welcome to Kemetrics",
+    "loginSubtitle": "Sign in to manage your water network with ease",
+    "heroTitle": "Your water, in your hands",
+    "heroSubtitle": "Easy, fast and secure",
+    "secure": "High security",
+    "fast": "Lightning speed",
+    "easy": "Easy to use"
   }
 }

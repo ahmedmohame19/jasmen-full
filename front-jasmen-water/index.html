@@ -2,9 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo2.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Swan Water</title>
+    <meta name="theme-color" content="#1b5fdc" />
+    <title>Kemetrics – Smart Water Anytime</title>
+    <script>
+      (function () {
+        var colorSchemes = { light: "light", dark: "dark", ocean: "dark" };
+        var theme = null;
+        try {
+          theme = JSON.parse(localStorage.getItem("theme"));
+        } catch (error) {
+          theme = null;
+        }
+        if (!colorSchemes[theme]) {
+          var legacyDarkMode = null;
+          try {
+            legacyDarkMode = JSON.parse(localStorage.getItem("isDarkMode"));
+          } catch (error) {
+            legacyDarkMode = null;
+          }
+          var prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
+          theme =
+            legacyDarkMode === null
+              ? prefersDark
+                ? "dark"
+                : "light"
+              : legacyDarkMode
+                ? "dark"
+                : "light";
+        }
+        document.documentElement.classList.add("theme-" + theme);
+        document.documentElement.setAttribute(
+          "data-color-scheme",
+          colorSchemes[theme]
+        );
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

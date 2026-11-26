@@ -12,8 +12,7 @@ import {
 import Input from "../../ui/Input";
 import Button from "../../ui/Button";
 import Heading from "../../ui/Heading";
-
-import logo from "/logo2.jpg";
+import KemetricsMark from "../../ui/KemetricsMark";
 
 const initialState = {
   email: "",
@@ -58,60 +57,59 @@ function LoginForm() {
   }
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex w-[90%] flex-col gap-[10px] rounded-md bg-secondary p-[20px]"
-      >
-        <div className="mb-[20px]">
-          <Heading>{t("login.title")}</Heading>
-        </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="surface-card flex w-full max-w-[440px] animate-rise-in flex-col gap-[12px] p-[28px] motion-reduce:animate-none"
+    >
+      <div className="mb-[14px] flex flex-col items-center gap-[10px] text-center">
+        <KemetricsMark className="hidden h-[54px] w-[43px] lg:block" />
+        <Heading>{t("brand.welcome")}</Heading>
+        <p className="text-sm text-mutedText">{t("brand.loginSubtitle")}</p>
+      </div>
 
-        <Input
-          placeholder={t("general.email")}
-          disabled={isLoading}
-          error={errors?.email?.message}
-          {...register("email", {
-            required: t("general.emailIsRequired"),
-            validate: {
-              noOnlySpaces: (value) =>
-                !isOnlySpaces(value) || t("general.onlySpaces"),
-            },
-            pattern: {
-              value: EMAIL_REGEX,
-              message: t("general.emailPattern"),
-            },
-            minLength: {
-              value: MIN_INPUT_LENGTH,
-              message: t("general.minLength"),
-            },
-            maxLength: {
-              value: MAX_INPUT_LENGTH,
-              message: t("general.maxLength"),
-            },
-          })}
-        />
+      <Input
+        placeholder={t("general.email")}
+        disabled={isLoading}
+        error={errors?.email?.message}
+        {...register("email", {
+          required: t("general.emailIsRequired"),
+          validate: {
+            noOnlySpaces: (value) =>
+              !isOnlySpaces(value) || t("general.onlySpaces"),
+          },
+          pattern: {
+            value: EMAIL_REGEX,
+            message: t("general.emailPattern"),
+          },
+          minLength: {
+            value: MIN_INPUT_LENGTH,
+            message: t("general.minLength"),
+          },
+          maxLength: {
+            value: MAX_INPUT_LENGTH,
+            message: t("general.maxLength"),
+          },
+        })}
+      />
 
-        <Input
-          placeholder={t("general.passwordPlaceholder")}
-          type="password"
-          disabled={isLoading}
-          error={errors?.password?.message}
-          {...register("password", {
-            required: t("general.passwordIsRequired"),
-            minLength: {
-              value: 7,
-              message: t("general.passwordLength"),
-            },
-          })}
-        />
+      <Input
+        placeholder={t("general.passwordPlaceholder")}
+        type="password"
+        disabled={isLoading}
+        error={errors?.password?.message}
+        {...register("password", {
+          required: t("general.passwordIsRequired"),
+          minLength: {
+            value: 7,
+            message: t("general.passwordLength"),
+          },
+        })}
+      />
 
-        <Button type="submit" disabled={isLoading}>
-          {!isLoading ? t("login.login") : <span>{t("general.loading")}</span>}
-        </Button>
-      </form>
-      <img src={logo} alt="Logo" className="w-[80px] rounded-full" />
-    </>
+      <Button type="submit" disabled={isLoading}>
+        {!isLoading ? t("login.login") : <span>{t("general.loading")}</span>}
+      </Button>
+    </form>
   );
 }
 

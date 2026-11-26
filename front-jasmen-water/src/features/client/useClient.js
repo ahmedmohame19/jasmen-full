@@ -12,7 +12,6 @@ export function useClient(id) {
       const [, userId] = queryKey;
       return getClient(userId);
     },
-    keepPreviousData: true,
   });
 
   return {

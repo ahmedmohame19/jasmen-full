@@ -45,7 +45,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
   return (
     <div className="flex flex-col gap-6">
       {/* Controls - Always visible */}
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
             <label className="text-textColor font-medium">{t("users.comparePeriod")}:</label>
@@ -84,7 +84,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
 
       {/* User Info */}
       {data && data.user && (
-        <div className="rounded-md bg-secondary p-[10px]">
+        <div className="surface-card p-[10px]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <div className="text-sm text-textColor opacity-70">{t("general.name")}</div>
@@ -103,7 +103,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
       )}
 
       {/* Message Display (if exists) */}
-      {data.message && (
+      {data?.message && (
         <div className="rounded-md bg-yellow-500/10 border border-yellow-500/20 p-[10px]">
           <p className="text-textColor text-sm">{data.message}</p>
         </div>
@@ -112,7 +112,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
       {/* Statistics Overview */}
       {data && data.statistics && data.statistics.descriptive && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="rounded-md bg-secondary p-4">
+          <div className="surface-card p-4">
             <div className="text-sm text-textColor opacity-70 flex items-center gap-2">
               {t("users.overallAvgConsumption")}
               <Tooltip content={t("users.overallAvgConsumptionTooltip")}>
@@ -126,7 +126,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
             </div>
           </div>
           {data.statistics.descriptive.overallTotalConsumption !== undefined && data.statistics.descriptive.overallTotalConsumption !== null && (
-            <div className="rounded-md bg-secondary p-4">
+            <div className="surface-card p-4">
               <div className="text-sm text-textColor opacity-70 flex items-center gap-2">
                 {t("users.overallTotalConsumption")}
                 <Tooltip content={t("users.overallTotalConsumptionTooltip")}>
@@ -139,7 +139,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
             </div>
           )}
           {data.statistics.descriptive.maxConsumption !== undefined && data.statistics.descriptive.maxConsumption !== null && (
-            <div className="rounded-md bg-secondary p-4">
+            <div className="surface-card p-4">
               <div className="text-sm text-textColor opacity-70 flex items-center gap-2">
                 {t("users.maxConsumption")}
                 <Tooltip content={t("users.maxConsumptionTooltip")}>
@@ -152,7 +152,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
             </div>
           )}
           {data.statistics.descriptive.minConsumption !== undefined && data.statistics.descriptive.minConsumption !== null && (
-            <div className="rounded-md bg-secondary p-4">
+            <div className="surface-card p-4">
               <div className="text-sm text-textColor opacity-70 flex items-center gap-2">
                 {t("users.minConsumption")}
                 <Tooltip content={t("users.minConsumptionTooltip")}>
@@ -169,7 +169,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
 
       {/* Trend Analysis */}
       {data && data.statistics?.trend && (
-        <div className="rounded-md bg-secondary p-[10px]">
+        <div className="surface-card p-[10px]">
           <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
             <FaChartBar />
             {t("users.trendAnalysis")}
@@ -229,7 +229,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
 
       {/* Comparisons */}
       {data && data.comparisons && data.comparisons.length > 0 && (
-        <div className="rounded-md bg-secondary p-[10px]">
+        <div className="surface-card p-[10px]">
           <h3 className="text-lg font-semibold text-textColor mb-4">{t("users.periodComparisons")}</h3>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -317,7 +317,7 @@ function ConsumptionAnalysis({ data, isLoading, comparePeriod, compareCount, onC
 
       {/* Anomalies */}
       {data && data.statistics?.anomalies && data.statistics.anomalies.length > 0 && (
-        <div className="rounded-md bg-secondary p-[10px]">
+        <div className="surface-card p-[10px]">
           <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
             <FaExclamationTriangle className="text-yellow-500" />
             {t("users.anomalies")}

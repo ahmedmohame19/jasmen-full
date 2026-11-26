@@ -10,11 +10,11 @@ function BuildingsTable() {
   const [t] = useTranslation();
 
   // Fetch Buildings Hook
-  const { isLoading, buildings, totalBuildings, error } = useBuildings();
+  const { isLoading, buildings, error } = useBuildings();
 
   if (isLoading) return <Spinner height="h-[calc(100vh-160px)]" />;
-  if (!buildings?.length) return <Empty message={t("buildings.noBuildings")} />;
   if (error) return <Empty message={t("general.failedToGetData")} />;
+  if (!buildings?.length) return <Empty message={t("buildings.noBuildings")} />;
 
   return (
     <>

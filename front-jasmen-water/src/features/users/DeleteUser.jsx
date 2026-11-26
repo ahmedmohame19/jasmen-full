@@ -38,7 +38,7 @@ function DeleteUser({ userId }) {
       <Modal.Window name="deleteUser">
         <ConfirmMessage
           disabled={isDeleting}
-          message={t("general.logoutMessage")}
+          message={t("general.deleteUserMessage")}
           onConfirm={handleDeleteUser}
         />
       </Modal.Window>

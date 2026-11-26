@@ -1,46 +1,25 @@
-import { useEffect, useState } from 'react'
-import { io } from 'socket.io-client'
-
-const baseURL = 'https://jasminewaterflow.com:5000/'
-// const baseURL = 'http://localhost:3000/'
+import { useEffect, useState } from "react";
+import { useSocket } from "../context/SocketContext";
+import { SOCKET_EVENT_USER_UPDATE } from "../utils/constants";
 
 export function useWebSocket(userId) {
-  const [socket, setSocket] = useState(null)
-  const [userRealTimeData, setUserRealTimeData] = useState(null)
+  const { socket, watchUsers } = useSocket();
+  const [userRealTimeData, setUserRealTimeData] = useState(null);
 
   useEffect(() => {
-    // Initialize WebSocket connection
-    const newSocket = io(baseURL, {
-      withCredentials: true,
-      transports: ['websocket']
-    })
+    if (!socket || !userId) return undefined;
 
-    setSocket(newSocket)
+    function handleUserUpdate(data) {
+      if (data?.userId === userId) setUserRealTimeData(data);
+    }
 
-    // Clean up connection on unmount
+    socket.on(SOCKET_EVENT_USER_UPDATE, handleUserUpdate);
+    watchUsers([userId], { force: true });
+
     return () => {
-      newSocket.disconnect()
-    }
-  }, [])
+      socket.off(SOCKET_EVENT_USER_UPDATE, handleUserUpdate);
+    };
+  }, [socket, userId, watchUsers]);
 
-  useEffect(() => {
-    if (socket && userId) {
-      // Emit an event to request user data
-      socket.emit('viewUserProfile', userId)
-
-      // Listen for real-time updates
-      socket.on('userConsumptionUpdate', (data) => {
-        setUserRealTimeData(data)
-      })
-    }
-
-    // Cleanup event listeners when the component unmounts or dependencies change
-    return () => {
-      if (socket) {
-        socket.off('userConsumptionUpdate')
-      }
-    }
-  }, [socket, userId])
-
-  return { socket, userRealTimeData }
+  return { socket, userRealTimeData };
 }

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useChartColors } from "../../hooks/useChartColors";
 import { FaCalendarAlt, FaChartLine, FaInfoCircle } from "react-icons/fa";
 import Chart from "react-apexcharts";
 import Spinner from "../../ui/spinner/Spinner";
@@ -16,6 +17,7 @@ function ConsumptionByPeriod({
   onStartDateChange,
   onEndDateChange
 }) {
+  const chartColors = useChartColors();
   const [t] = useTranslation();
   const periods = ["day", "week", "month", "year", "hour", "quarter"];
 
@@ -102,7 +104,7 @@ function ConsumptionByPeriod({
         rotate: -45,
         rotateAlways: false,
         style: {
-          colors: "#9ca3af",
+          colors: chartColors.axis,
         },
       },
     },
@@ -112,25 +114,25 @@ function ConsumptionByPeriod({
       },
       labels: {
         style: {
-          colors: "#9ca3af",
+          colors: chartColors.axis,
         },
       },
     },
     legend: {
       position: "top",
       labels: {
-        colors: "#9ca3af",
+        colors: chartColors.axis,
       },
     },
     tooltip: {
-      theme: "dark",
+      theme: chartColors.colorScheme,
       shared: true,
       intersect: false,
       style: {
         fontSize: "12px",
       },
     },
-    colors: ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"],
+    colors: chartColors.series.slice(0, 4),
   };
 
   const flowRateChartOptions = {
@@ -151,7 +153,7 @@ function ConsumptionByPeriod({
         rotate: -45,
         rotateAlways: false,
         style: {
-          colors: "#9ca3af",
+          colors: chartColors.axis,
         },
       },
     },
@@ -161,25 +163,25 @@ function ConsumptionByPeriod({
       },
       labels: {
         style: {
-          colors: "#9ca3af",
+          colors: chartColors.axis,
         },
       },
     },
     legend: {
       position: "top",
       labels: {
-        colors: "#9ca3af",
+        colors: chartColors.axis,
       },
     },
     tooltip: {
-      theme: "dark",
+      theme: chartColors.colorScheme,
       shared: true,
       intersect: false,
       style: {
         fontSize: "12px",
       },
     },
-    colors: ["#8b5cf6", "#06b6d4", "#84cc16"],
+    colors: [chartColors.series[5], chartColors.series[1], chartColors.series[4]],
     fill: {
       type: "gradient",
       gradient: {
@@ -214,7 +216,7 @@ function ConsumptionByPeriod({
 
       {/* Current Period Info */}
       {data && data.dateRange && (
-        <div className="rounded-md bg-secondary p-[10px]">
+        <div className="surface-card p-[10px]">
           <div className="flex flex-wrap items-center gap-4 text-sm">
             <div className="flex items-center gap-2 text-textColor">
               <FaCalendarAlt className="opacity-70" />
@@ -242,7 +244,7 @@ function ConsumptionByPeriod({
 
       {/* User Info */}
       {data && data.user && (
-        <div className="rounded-md bg-secondary p-[10px]">
+        <div className="surface-card p-[10px]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <div className="text-sm text-textColor opacity-70">{t("general.name")}</div>
@@ -263,7 +265,7 @@ function ConsumptionByPeriod({
       {/* Summary Statistics (Enhanced) */}
       {data && data.summary && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="rounded-md bg-secondary p-4">
+          <div className="surface-card p-4">
             <div className="text-sm text-textColor opacity-70 flex items-center gap-2">
               {t("users.totalPeriods")}
               <Tooltip content={t("users.totalPeriodsTooltip")}>
@@ -274,7 +276,7 @@ function ConsumptionByPeriod({
               {data.summary.totalPeriods || 0}
             </div>
           </div>
-          <div className="rounded-md bg-secondary p-4">
+          <div className="surface-card p-4">
             <div className="text-sm text-textColor opacity-70 flex items-center gap-2">
               {t("users.totalConsumption")}
               <Tooltip content={t("users.totalConsumptionTooltip")}>
@@ -285,7 +287,7 @@ function ConsumptionByPeriod({
               {(data.summary.totalConsumption || 0).toFixed(2)}
             </div>
           </div>
-          <div className="rounded-md bg-secondary p-4">
+          <div className="surface-card p-4">
             <div className="text-sm text-textColor opacity-70 flex items-center gap-2">
               {t("users.avgPerPeriod")}
               <Tooltip content={t("users.avgPerPeriodTooltip")}>
@@ -296,7 +298,7 @@ function ConsumptionByPeriod({
               {(data.summary.avgConsumptionPerPeriod || 0).toFixed(2)}
             </div>
           </div>
-          <div className="rounded-md bg-secondary p-4">
+          <div className="surface-card p-4">
             <div className="text-sm text-textColor opacity-70 flex items-center gap-2">
               {t("users.maxPeriod")}
               <Tooltip content={t("users.maxPeriodTooltip")}>
@@ -321,7 +323,7 @@ function ConsumptionByPeriod({
 
       {/* Projections (Enhanced) */}
       {data && data.projections && (
-        <div className="rounded-md bg-secondary p-[10px]">
+        <div className="surface-card p-[10px]">
           <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
             {t("users.projections")}
             <Tooltip content={t("users.projectionsTooltip")}>
@@ -373,7 +375,7 @@ function ConsumptionByPeriod({
       {/* Charts */}
       {data && chartData && (
         <>
-          <div className="rounded-md bg-secondary p-[10px]">
+          <div className="surface-card p-[10px]">
             <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
               <FaChartLine />
               {t("users.consumptionTrends")}
@@ -390,7 +392,7 @@ function ConsumptionByPeriod({
           </div>
 
           {flowRateChartData && (
-            <div className="rounded-md bg-secondary p-[10px]">
+            <div className="surface-card p-[10px]">
               <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
                 <FaChartLine />
                 {t("users.flowRateAnalysis")}
@@ -411,7 +413,7 @@ function ConsumptionByPeriod({
 
       {/* Consumption Data Table */}
       {data && data.data && data.data.length > 0 && (
-        <div className="rounded-md bg-secondary p-[10px]">
+        <div className="surface-card p-[10px]">
           <h3 className="text-lg font-semibold text-textColor mb-4">{t("users.detailedData")}</h3>
           <div className="overflow-x-auto">
               <table className="w-full">

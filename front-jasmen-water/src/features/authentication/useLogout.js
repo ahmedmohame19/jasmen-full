@@ -8,7 +8,7 @@ export function useLogout() {
 
   const { mutate: logout, isPending: isLoading } = useMutation({
     mutationFn: logoutApi,
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.removeQueries();
       localStorage.removeItem("WATER_USER_TOKEN");
       navigate("/login", { replace: true });

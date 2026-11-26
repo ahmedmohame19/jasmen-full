@@ -9,7 +9,6 @@ export function useSettings() {
   } = useQuery({
     queryKey: ["settings"],
     queryFn: getSettings,
-    keepPreviousData: true,
   });
 
   return {

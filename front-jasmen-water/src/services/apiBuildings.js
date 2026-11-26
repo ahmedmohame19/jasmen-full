@@ -1,6 +1,12 @@
 import axios from "./axios";
+import { IS_MOCK_MODE } from "../utils/constants";
+import {
+  getMockBuildingDetails,
+  getMockBuildings,
+} from "../features/buildings/map/mockData";
 
 export async function getBuildings() {
+  if (IS_MOCK_MODE) return getMockBuildings();
   const token = localStorage.getItem("WATER_USER_TOKEN");
   try {
     const response = await axios.get("building/v1/GetAllBuildings", {
@@ -115,6 +121,7 @@ export async function deleteBuilding({ id }) {
 }
 
 export async function getBuildingDetails(id) {
+  if (IS_MOCK_MODE) return getMockBuildingDetails(id);
   const token = localStorage.getItem("WATER_USER_TOKEN");
 
   try {

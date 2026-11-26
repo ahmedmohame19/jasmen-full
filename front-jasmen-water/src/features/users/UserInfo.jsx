@@ -35,25 +35,24 @@ function UserInfo() {
   const realTimePercentage = consumptionLimit > 0 ?
     Math.round(((consumption / consumptionLimit) * 100) * 100) / 100 : null;
 
-  const percentage = userData?.consumption > 0 ?
-    Math.round(((userData?.consumption / userData?.limit) * 100) * 100) / 100
-    : 0;
+  const percentage =
+    userData?.consumption > 0 && userData?.limit > 0
+      ? Math.round((userData.consumption / userData.limit) * 100 * 100) / 100
+      : 0;
 
   // Use real-time data if available, otherwise fall back to stored data
   // Cap at 100% for display purposes, but allow values over 100% to show the actual percentage
   const displayPercentage = realTimePercentage !== null ? realTimePercentage : percentage;
 
-  console.log(userData?.limit, userData?.consumption);
-
   return (
     <div className="flex flex-col gap-[20px]">
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <Row>
           <Heading>{t("users.userInfo")}</Heading>
         </Row>
       </div>
 
-      <div className="flex flex-wrap justify-around gap-[20px] rounded-md bg-secondary p-[10px] lg:flex-nowrap lg:justify-start lg:gap-[10px]">
+      <div className="flex flex-wrap justify-around gap-[20px] surface-card p-[10px] lg:flex-nowrap lg:justify-start lg:gap-[10px]">
         <OpenValve userData={userData} socket={socket} />
         <CloseValve userData={userData} socket={socket} />
         <AddCharge user={userData} socket={socket} />

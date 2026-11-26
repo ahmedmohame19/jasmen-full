@@ -53,7 +53,7 @@ function BuildingCard({ building }) {
           {/* Building Name */}
           <div className="text-center mb-3 px-2">
             <Tooltip content={building?.buildingName}>
-              <h3 className="text-lg font-bold text-textColor mb-2 group-hover:text-colorBrand transition-colors duration-200 break-words cursor-help">
+              <h3 className="text-lg font-bold text-textColor mb-2 group-hover:text-brandText transition-colors duration-200 break-words cursor-help">
                 {building?.buildingName}
               </h3>
             </Tooltip>

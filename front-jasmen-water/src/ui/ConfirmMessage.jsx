@@ -5,16 +5,12 @@ function ConfirmMessage({ onConfirm, message, disabled, onCloseModal }) {
   const [t] = useTranslation();
 
   const handleConfirm = async () => {
-    try {
-      await onConfirm?.();
-      onCloseModal?.();
-    } catch (error) {
-      console.error("Error confirming action:", error);
-    }
+    await onConfirm?.();
+    onCloseModal?.();
   };
 
   return (
-    <div className="ga-[1.2rem] flex flex-col p-[20px] text-textColor">
+    <div className="flex flex-col gap-[1.2rem] p-[20px] text-textColor">
       <p className="mb-[1.2rem]">{message}</p>
 
       <div className="flex justify-end gap-[1.2rem]">

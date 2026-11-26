@@ -6,7 +6,7 @@ function BuildingInfo({ building }) {
   const [t] = useTranslation();
 
   return (
-    <div className="rounded-md bg-secondary p-[10px]">
+    <div className="surface-card p-[10px]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Building Logo */}
         {building.buildingLogo && (

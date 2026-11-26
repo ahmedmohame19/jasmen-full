@@ -1,5 +1,19 @@
 {
   "general": {
+    "deleteUserMessage": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟",
+    "errorTitle": "حدث خطأ ما",
+    "errorMessage": "حدث خطأ غير متوقع. أعد تحميل الصفحة للمتابعة.",
+    "reload": "إعادة التحميل",
+    "notAvailable": "غير متاح",
+    "quality": "الجودة",
+    "goBack": "رجوع",
+    "nameRequired": "الاسم مطلوب",
+    "numbersOnly": "أرقام فقط",
+    "metersCountRequired": "عدد الأمتار مطلوب",
+    "toggleMenu": "تبديل القائمة",
+    "close": "إغلاق",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور",
     "arabic": "العربيه",
     "english": "الانجليزيه",
     "email": "البريد الالكتروني",
@@ -60,6 +74,7 @@
     "minValue": "يجب أن تكون القيمة أكبر من أو تساوي 0"
   },
   "sidebar": {
+    "map": "خريطة المباني",
     "dashboard": "لوحه التحكم",
     "users": "المستخدمون",
     "buildings": "المباني",
@@ -72,6 +87,13 @@
   },
 
   "users": {
+    "whatsAppNumber": "رقم واتساب",
+    "noCharges": "لا توجد عمليات شحن بعد",
+    "seasonalPattern": "النمط الموسمي",
+    "pumpUtilizationRate": "معدل استخدام المضخة",
+    "value": "القيمة",
+    "recommendationsTooltip": "إجراءات مقترحة بناءً على التحليل",
+    "stable": "مستقر",
     "users": "كل العملاء",
     "createUser": "إنشاء مستخدم جديد",
     "mobile": "رقم الهاتف",
@@ -496,6 +518,7 @@
     "title": "الملف الشخصي"
   },
   "descriptions": {
+    "updateSettings": "تحديث إعدادات النظام",
     "translateBtn": "زر التبديل بين اللغتين العربية والإنجليزية",
     "toggleLightAndDark": "زر التبديل بين الوضع الداكن والفاتح",
     "adminIcon": "رابط الملف الشخصي للمسؤول",
@@ -521,6 +544,7 @@
     "year": "السنه الحاليه"
   },
   "buildings": {
+    "deleteBuilding": "حذف المبنى",
     "buildings": "جميع المباني",
     "createBuilding": "إنشاء مبنى جديد",
     "editBuilding": "تعديل المبنى",
@@ -564,5 +588,75 @@
     "noUnassignedUsers": "لا يوجد مستخدمين غير معينين",
     "assign": "تعيين",
     "createUser": "إنشاء مستخدم"
+  },
+  "connection": {
+    "title": "الاتصال المباشر",
+    "connected": "مباشر",
+    "reconnecting": "جارٍ إعادة الاتصال",
+    "offline": "غير متصل",
+    "mock": "بيانات تجريبية"
+  },
+  "map": {
+    "subtitle": "{{units}} وحدة في {{buildings}} مبنى",
+    "health": "سلامة الشبكة",
+    "view": {
+      "label": "طريقة العرض",
+      "skyline": "الأفق",
+      "cards": "بطاقات"
+    },
+    "alerts": {
+      "title": "تسريبات محتملة"
+    },
+    "unit": {
+      "room": "غرفة",
+      "balance": "الرصيد"
+    },
+    "title": "خريطة المباني",
+    "status": {
+      "leak": "اشتباه تسرب",
+      "inactive": "غير نشط",
+      "low": "رصيد منخفض",
+      "ok": "طبيعي"
+    },
+    "legend": {
+      "title": "دليل الحالات",
+      "leak": "احتمال وجود تسرب مياه (وميض)",
+      "inactive": "الصمام مغلق أو الجهاز غير متصل",
+      "low": "الرصيد على وشك النفاد",
+      "ok": "يعمل بشكل طبيعي"
+    },
+    "reason": {
+      "valveClosed": "الصمام مغلق",
+      "offline": "الجهاز غير متصل"
+    },
+    "filter": {
+      "label": "التصفية حسب الحالة",
+      "all": "الكل"
+    },
+    "threshold": {
+      "label": "حد الرصيد المنخفض (%)"
+    },
+    "summary": {
+      "title": "ملخص الحالات"
+    },
+    "noUnits": "لا توجد وحدات",
+    "noMatches": "لا توجد مبانٍ مطابقة لهذه التصفية"
+  },
+  "theme": {
+    "label": "المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "ocean": "محيطي"
+  },
+  "brand": {
+    "name": "Kemetrics",
+    "tagline": "مياه ذكية في أي وقت",
+    "welcome": "مرحباً بك في Kemetrics",
+    "loginSubtitle": "سجّل دخولك لإدارة شبكة المياه بسهولة",
+    "heroTitle": "مياهك .. بين يديك",
+    "heroSubtitle": "بكل سهولة وأمان",
+    "secure": "أمان عالي",
+    "fast": "سرعة فائقة",
+    "easy": "سهولة في الاستخدام"
   }
 }

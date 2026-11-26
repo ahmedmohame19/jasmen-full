@@ -113,7 +113,7 @@ function AssignUserList({
           <div className="flex items-center justify-between gap-[20px]">
             <button
               className={`flex items-center justify-between gap-[5px] text-textColor ${
-                currentPage === 1 ? "cursor-not-allowed opacity-50" : "hover:text-colorBrand"
+                currentPage === 1 ? "cursor-not-allowed opacity-50" : "hover:text-brandText"
               }`}
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
@@ -128,7 +128,7 @@ function AssignUserList({
 
             <button
               className={`flex items-center justify-between gap-[5px] text-textColor ${
-                currentPage === totalPages ? "cursor-not-allowed opacity-50" : "hover:text-colorBrand"
+                currentPage === totalPages ? "cursor-not-allowed opacity-50" : "hover:text-brandText"
               }`}
               onClick={handleNextPage}
               disabled={currentPage === totalPages}

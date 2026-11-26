@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useChartColors } from "../../hooks/useChartColors";
 import {
   FaCog,
   FaTint,
@@ -40,6 +41,7 @@ function PumpAnalysisTab({
   optimizationData,
   optimizationLoading,
 }) {
+  const chartColors = useChartColors();
   const [t] = useTranslation();
   const [activeSubTab, setActiveSubTab] = useState("efficiency");
 
@@ -60,7 +62,7 @@ function PumpAnalysisTab({
   return (
     <div className="flex flex-col gap-6">
       {/* Sub-tabs */}
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <div className="flex items-center gap-2 border-b border-primary overflow-x-auto">
           {subTabs.map((tab) => {
             const Icon = tab.icon;
@@ -90,7 +92,7 @@ function PumpAnalysisTab({
           ) : !pumpEfficiencyData || pumpEfficiencyData.hasData === false ? (
             <Empty message={pumpEfficiencyData?.message || "No pump efficiency data available. Consumption data is required for efficiency analysis."} />
           ) : (
-            <div className="rounded-md bg-secondary p-[10px]">
+            <div className="surface-card p-[10px]">
               <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
                 <FaCog />
                 {t("users.pumpEfficiencyAnalysis")}
@@ -173,7 +175,7 @@ function PumpAnalysisTab({
                       <ul className="space-y-2">
                         {pumpEfficiencyData.insights.recommendations.map((rec, index) => (
                           <li key={index} className="text-textColor text-sm flex items-start gap-2">
-                            <span className="text-colorBrand">•</span>
+                            <span className="text-brandText">•</span>
                             <span>{rec}</span>
                           </li>
                         ))}
@@ -194,7 +196,7 @@ function PumpAnalysisTab({
           ) : (
             <>
               {/* Date Range Picker and Controls - Always visible */}
-              <div className="rounded-md bg-secondary p-[10px]">
+              <div className="surface-card p-[10px]">
                 <div className="flex flex-wrap items-center gap-4">
                   <DateRangePicker
                     startDate={leakStartDate || leakData?.period?.startDate}
@@ -248,7 +250,7 @@ function PumpAnalysisTab({
 
               {/* Current Period Info */}
               {leakData?.period && (
-                <div className="rounded-md bg-secondary p-[10px]">
+                <div className="surface-card p-[10px]">
                   <div className="flex flex-wrap items-center gap-4 text-sm">
                     <div className="flex items-center gap-2 text-textColor">
                       <FaCalendarAlt className="opacity-70" />
@@ -375,7 +377,7 @@ function PumpAnalysisTab({
 
                   {/* Baseline Metrics */}
                   {leakData.leakDetection.baseline && (
-                    <div className="rounded-md bg-secondary p-[10px]">
+                    <div className="surface-card p-[10px]">
                       <h4 className="font-semibold text-textColor mb-3 flex items-center gap-2">
                         {t("users.baselineMetrics")}
                         <Tooltip content={t("users.baselineMetricsTooltip")}>
@@ -436,7 +438,7 @@ function PumpAnalysisTab({
 
                   {/* Leak Patterns */}
                   {leakData.leakDetection.leakPatterns && (
-                    <div className="rounded-md bg-secondary p-[10px]">
+                    <div className="surface-card p-[10px]">
                       <h4 className="font-semibold text-textColor mb-3 flex items-center gap-2">
                         {t("users.leakPatternsDetected")}
                         <Tooltip content={t("users.leakPatternsTooltip")}>
@@ -477,7 +479,7 @@ function PumpAnalysisTab({
                     <>
                       {/* Risk Distribution Chart */}
                       {leakData.leakDetection.highRiskDays != null && (
-                        <div className="rounded-md bg-secondary p-[10px]">
+                        <div className="surface-card p-[10px]">
                           <h4 className="font-semibold text-textColor mb-3 flex items-center gap-2">
                             <FaChartLine />
                             {t("users.riskDistribution")}
@@ -496,15 +498,15 @@ function PumpAnalysisTab({
                                 `${t("users.medium")} ${t("users.risk") || "Risk"}`,
                                 `${t("users.low")} ${t("users.risk") || "Risk"}`
                               ],
-                              colors: ["#ef4444", "#f59e0b", "#3b82f6"],
+                              colors: [chartColors.series[3], chartColors.series[2], chartColors.series[0]],
                               legend: {
                                 position: "bottom",
                                 labels: {
-                                  colors: "#9ca3af",
+                                  colors: chartColors.axis,
                                 },
                               },
                               tooltip: {
-                                theme: "dark",
+                                theme: chartColors.colorScheme,
                                 y: {
                                   formatter: (val) => `${val} ${t("users.days") || "days"}`,
                                 },
@@ -547,7 +549,7 @@ function PumpAnalysisTab({
                               rotate: -45, 
                               rotateAlways: false,
                               style: {
-                                colors: "#9ca3af",
+                                colors: chartColors.axis,
                               },
                             },
                           },
@@ -557,13 +559,13 @@ function PumpAnalysisTab({
                             max: 100,
                             labels: {
                               style: {
-                                colors: "#9ca3af",
+                                colors: chartColors.axis,
                               },
                             },
                           },
-                          colors: ["#ef4444"],
+                          colors: [chartColors.series[3]],
                           tooltip: {
-                            theme: "dark",
+                            theme: chartColors.colorScheme,
                             shared: true,
                             intersect: false,
                             style: {
@@ -573,7 +575,7 @@ function PumpAnalysisTab({
                         };
 
                         return (
-                          <div className="rounded-md bg-secondary p-[10px]">
+                          <div className="surface-card p-[10px]">
                             <h4 className="font-semibold text-textColor mb-3 flex items-center gap-2">
                               <FaChartLine />
                               {t("users.leakRiskScoreOverTime")}
@@ -617,7 +619,7 @@ function PumpAnalysisTab({
                               rotate: -45, 
                               rotateAlways: false,
                               style: {
-                                colors: "#9ca3af",
+                                colors: chartColors.axis,
                               },
                             },
                           },
@@ -625,19 +627,19 @@ function PumpAnalysisTab({
                             title: { text: t("users.value") || "Value" },
                             labels: {
                               style: {
-                                colors: "#9ca3af",
+                                colors: chartColors.axis,
                               },
                             },
                           },
-                          colors: ["#3b82f6", "#10b981"],
+                          colors: [chartColors.series[0], chartColors.series[1]],
                           legend: { 
                             position: "top",
                             labels: {
-                              colors: "#9ca3af",
+                              colors: chartColors.axis,
                             },
                           },
                           tooltip: { 
-                            theme: "dark",
+                            theme: chartColors.colorScheme,
                             shared: true, 
                             intersect: false,
                             style: {
@@ -647,7 +649,7 @@ function PumpAnalysisTab({
                         };
 
                         return (
-                          <div className="rounded-md bg-secondary p-[10px]">
+                          <div className="surface-card p-[10px]">
                             <h4 className="font-semibold text-textColor mb-3 flex items-center gap-2">
                               <FaChartLine />
                               {t("users.consumptionVsFlowRate")}
@@ -673,7 +675,7 @@ function PumpAnalysisTab({
                   {/* Leak Indicators */}
                   {leakData.leakDetection.leakIndicators &&
                     leakData.leakDetection.leakIndicators.length > 0 && (
-                      <div className="rounded-md bg-secondary p-[10px]">
+                      <div className="surface-card p-[10px]">
                         <h4 className="font-semibold text-textColor mb-3 flex items-center gap-2">
                           {t("users.leakIndicators")} ({leakData.leakDetection.leakIndicators.length})
                           <Tooltip content={t("users.leakIndicatorsTooltip")}>
@@ -800,7 +802,7 @@ function PumpAnalysisTab({
           ) : !cycleData || cycleData.hasData === false ? (
             <Empty message={cycleData?.message || "No cycle analysis data available. Consumption data is required for cycle analysis."} />
           ) : (
-            <div className="rounded-md bg-secondary p-[10px]">
+            <div className="surface-card p-[10px]">
               <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
                 <FaCog />
                 {t("users.pumpCycleAnalysis")}
@@ -894,7 +896,7 @@ function PumpAnalysisTab({
                   <ul className="space-y-2">
                     {cycleData.insights.recommendations.map((rec, index) => (
                       <li key={index} className="text-textColor text-sm flex items-start gap-2">
-                        <span className="text-colorBrand">•</span>
+                        <span className="text-brandText">•</span>
                         <span>{rec}</span>
                       </li>
                     ))}
@@ -914,7 +916,7 @@ function PumpAnalysisTab({
           ) : !healthData || healthData.hasData === false ? (
             <Empty message={healthData?.message || "No health monitoring data available. Consumption data is required for health monitoring."} />
           ) : (
-            <div className="rounded-md bg-secondary p-[10px]">
+            <div className="surface-card p-[10px]">
               <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
                 <FaHeartbeat />
                 {t("users.pumpHealthMonitoring")}
@@ -1048,7 +1050,7 @@ function PumpAnalysisTab({
                       <ul className="space-y-2">
                         {healthData.recommendations.map((rec, index) => (
                           <li key={index} className="text-textColor text-sm flex items-start gap-2">
-                            <span className="text-colorBrand">•</span>
+                            <span className="text-brandText">•</span>
                             <span>{rec}</span>
                           </li>
                         ))}
@@ -1070,7 +1072,7 @@ function PumpAnalysisTab({
           ) : !optimizationData || optimizationData.hasData === false ? (
             <Empty message={optimizationData?.message || "No optimization data available. Consumption data is required for optimization analysis."} />
           ) : (
-            <div className="rounded-md bg-secondary p-[10px]">
+            <div className="surface-card p-[10px]">
               <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
                 <FaLightbulb />
                 {t("users.pumpOperationOptimization")}
@@ -1180,7 +1182,7 @@ function PumpAnalysisTab({
                   <ul className="space-y-2">
                     {optimizationData.actionPlan.map((action, index) => (
                       <li key={index} className="text-textColor text-sm flex items-start gap-2">
-                        <span className="text-colorBrand">•</span>
+                        <span className="text-brandText">•</span>
                         <div className="flex-1">
                           <span className="font-semibold">{action.action}</span>
                           <div className="text-xs text-textColor opacity-70 mt-1">

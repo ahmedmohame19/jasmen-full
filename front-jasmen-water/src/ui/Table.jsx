@@ -1,16 +1,14 @@
 const Table = ({ children }) => {
   return (
-    <div className="overflow-x-auto rounded-t-md">
-      <table className="w-full rounded-t-md border-[2px] border-secondary p-[10px] text-left text-sm rtl:text-right">
-        {children}
-      </table>
+    <div className="surface-card overflow-x-auto">
+      <table className="w-full text-start text-sm">{children}</table>
     </div>
   );
 };
 
 const Header = ({ children }) => {
   return (
-    <thead className="rounded-t-md bg-primary text-xs uppercase">
+    <thead className="bg-primary text-xs uppercase text-mutedText">
       <tr>{children}</tr>
     </thead>
   );
@@ -21,13 +19,20 @@ const Body = ({ data, render }) => {
 };
 
 const Row = ({ children }) => {
-  return <tr className="border-b border-primary bg-secondary">{children}</tr>;
+  return (
+    <tr className="border-b border-line transition-colors last:border-b-0 hover:bg-primary">
+      {children}
+    </tr>
+  );
 };
 
 const Cell = ({ children, isHeader = false }) => {
   const Tag = isHeader ? "th" : "td";
   return (
-    <Tag scope={isHeader ? "col" : "row"} className="px-6 py-4">
+    <Tag
+      scope={isHeader ? "col" : undefined}
+      className="px-6 py-4 text-start font-semibold first:ps-6"
+    >
       {children}
     </Tag>
   );

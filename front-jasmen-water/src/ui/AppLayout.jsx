@@ -10,13 +10,13 @@ function AppLayout() {
   const closeSidebar = () => setShowSidebar(false);
 
   return (
-    <div className="flex text-textColor">
-      <div className="md:w-[300px]">
+    <div className="flex min-h-screen text-textColor">
+      <div className="md:w-[290px]">
         <Sidebar showSidebar={showSidebar} closeSidebar={closeSidebar} />
       </div>
-      <div className="w-full md:w-[calc(100%-300px)]">
+      <div className="w-full md:w-[calc(100%-290px)]">
         <Header toggleSidebar={toggleSidebar} />
-        <main className="h-[calc(100vh-70px)] overflow-y-auto bg-primary p-[10px] md:p-[15px]">
+        <main className="h-[calc(100vh-70px)] overflow-y-auto p-[12px] md:p-[22px]">
           <Outlet />
         </main>
       </div>

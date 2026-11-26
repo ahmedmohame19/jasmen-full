@@ -52,7 +52,7 @@ function SettingFrom({ settings, onCloseModal }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-[10px] rounded-md bg-secondary p-[10px] text-textColor"
+      className="flex flex-col gap-[10px] surface-card p-[10px] text-textColor"
     >
       <h2 className="my-[10px] text-xl capitalize">
         {t("settings.updateSettings")}

@@ -7,52 +7,51 @@ import { Link } from "react-router-dom";
 import Stat from "./Stat";
 import Empty from "../../ui/Empty";
 import MiniSpinner from "../../ui/miniSpinner/MiniSpinner";
-import Button from "../../ui/Button";
-import { baseURL } from "../../services/axios";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useQueryClient } from "@tanstack/react-query";
+import KemetricsMark from "../../ui/KemetricsMark";
+import WaveBackdrop from "../../ui/WaveBackdrop";
 
 function Status() {
   const [t] = useTranslation();
   const { isLoading, userCount, totalMoney, error } = useLastFiveUsersAdded();
 
-  const token = localStorage.getItem("WATER_USER_TOKEN");
-  const queryClient = useQueryClient();
-
-
-  const resetTotalMoney = async () => {
-    const response = await axios.delete(`${baseURL}user/v1/ResetAllMoneyGained`, {
-      headers: {
-        access_token: token,
-      },
-    });
-    if (response.data?.success) {
-      toast.success(t("users.resetTotalMoneySuccess"));
-      queryClient.invalidateQueries({ queryKey: ["LastFiveUsersAdded"] });
-    } else {
-      toast.error(t("users.resetTotalMoneyFailed"));
-    }
-  };
-
-
   if (error) return <Empty message={t("general.failedToGetData")} />;
 
   return (
     <div className="flex flex-col gap-[20px]">
+      <section className="relative overflow-hidden rounded-3xl bg-hero-gradient p-[24px] text-white shadow-glow md:p-[36px]">
+        <div className="relative z-10 flex items-center justify-between gap-[20px]">
+          <div className="max-w-[560px]">
+            <p className="text-sm font-semibold uppercase tracking-widest text-sky-200">
+              {t("brand.tagline")}
+            </p>
+            <h2 className="mt-[6px] text-3xl font-extrabold leading-tight md:text-5xl">
+              {t("brand.heroTitle")}
+            </h2>
+            <p className="mt-[6px] text-lg font-semibold text-sky-100 md:text-2xl">
+              {t("brand.heroSubtitle")}
+            </p>
+            <Link
+              to="/buildings-map"
+              className="mt-[20px] inline-flex rounded-xl bg-white px-[18px] py-[10px] text-sm font-bold text-[#0b2a6b] shadow-lg transition-transform hover:scale-[1.03]"
+            >
+              {t("sidebar.map")}
+            </Link>
+          </div>
+          <KemetricsMark className="hidden h-[150px] w-[120px] animate-float-y drop-shadow-2xl motion-reduce:animate-none sm:block" />
+        </div>
+        <WaveBackdrop className="h-[90px]" />
+      </section>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-[10px]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-[14px]">
         {isLoading ? (
           <MiniSpinner />
         ) : (
           <Link to="/users">
             <Stat
               description="descriptions.allUsers"
-              icon={<FaUsers className="text-xl" />}
+              icon={<FaUsers className="text-2xl" />}
               title="users.users"
               value={userCount || 0}
-              color="#0000ff7a"
             />
           </Link>
         )}
@@ -63,10 +62,9 @@ function Status() {
           <Link to="/usersStatistic">
             <Stat
               description="descriptions.allEarnings"
-              icon={<FaMoneyBillWave className="text-xl" />}
+              icon={<FaMoneyBillWave className="text-2xl" />}
               title="users.earnings"
               value={`${totalMoney || 0} ${t("general.EGP")}`}
-              color="#00800087"
             />
           </Link>
         )}

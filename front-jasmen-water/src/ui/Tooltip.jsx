@@ -15,10 +15,13 @@ function Tooltip({ children, content, className = "", position = "auto" }) {
       const tooltipHeight = 200; // Estimated tooltip height with padding
 
       // Check if element is in table header (typically near top) or has limited space above
-      const isInTableHeader = containerRef.current.closest('thead') !== null;
-      
+      const isInTableHeader = containerRef.current.closest("thead") !== null;
+
       // If in table header or not enough space above, show below
-      if (isInTableHeader || (spaceAbove < tooltipHeight && spaceBelow > tooltipHeight)) {
+      if (
+        isInTableHeader ||
+        (spaceAbove < tooltipHeight && spaceBelow > tooltipHeight)
+      ) {
         setTooltipPosition("bottom");
       } else if (spaceAbove >= tooltipHeight) {
         setTooltipPosition("top");
@@ -36,7 +39,7 @@ function Tooltip({ children, content, className = "", position = "auto" }) {
   const isTop = tooltipPosition === "top";
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className={`relative inline-block ${className}`}
       onMouseEnter={() => setIsVisible(true)}
@@ -44,20 +47,18 @@ function Tooltip({ children, content, className = "", position = "auto" }) {
     >
       {children}
       {isVisible && (
-        <div 
+        <div
           ref={tooltipRef}
-          className={`absolute z-50 px-4 py-3 text-sm text-white bg-gray-900 dark:bg-gray-700 rounded-lg shadow-xl whitespace-normal max-w-md min-w-[200px] transform -translate-x-1/2 left-1/2 ${
-            isTop 
-              ? "-top-2 -translate-y-full" 
-              : "top-full mt-2"
+          className={`absolute left-1/2 z-50 min-w-[200px] max-w-md -translate-x-1/2 transform whitespace-normal rounded-lg bg-gray-900 px-4 py-3 text-sm text-white shadow-xl dark:bg-gray-700 ${
+            isTop ? "-top-2 -translate-y-full" : "top-full mt-2"
           }`}
         >
           <div className="break-words leading-relaxed">{content}</div>
-          <div 
-            className={`absolute left-1/2 transform -translate-x-1/2 w-0 h-0 ${
+          <div
+            className={`absolute left-1/2 h-0 w-0 -translate-x-1/2 transform ${
               isTop
                 ? "top-full border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-900 dark:border-t-gray-700"
-                : "bottom-full border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-gray-900 dark:border-b-gray-700"
+                : "bottom-full border-b-4 border-l-4 border-r-4 border-b-gray-900 border-l-transparent border-r-transparent dark:border-b-gray-700"
             }`}
           ></div>
         </div>

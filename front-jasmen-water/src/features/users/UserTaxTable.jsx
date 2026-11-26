@@ -13,7 +13,7 @@ function UserTaxTable({ userData }) {
 
   return (
     <>
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <Row>
           {userData?.tax?.length > 0 ? (
             <h2 className="text-lg">

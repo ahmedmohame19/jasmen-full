@@ -14,11 +14,14 @@ function LogoutOutBtn() {
   return (
     <Modal>
       <Modal.Open opens="productConfirm">
-        <li className="cursor-pointer">
-          <div className="flex items-center gap-[15px] rounded-md bg-primary p-[13px] text-lg">
-            <IoLogOut />
+        <li>
+          <button
+            type="button"
+            className="flex w-full items-center gap-[14px] rounded-xl p-[12px] text-base font-semibold text-textColor transition-colors hover:bg-primary"
+          >
+            <IoLogOut className="text-xl" aria-hidden="true" />
             <span>{t("sidebar.logout")}</span>
-          </div>
+          </button>
         </li>
       </Modal.Open>
 

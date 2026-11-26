@@ -11,8 +11,8 @@ function AccountInfo() {
   if (error) return <Empty message={t("general.failedToGetData")} />;
 
   return (
-    <div className="rounded-md bg-secondary p-[10px]">
-      <div className="flex w-full flex-col gap-[10px] rounded-md bg-secondary p-[10px] text-sm lg:w-[50%]">
+    <div className="surface-card p-[10px]">
+      <div className="flex w-full flex-col gap-[10px] surface-card p-[10px] text-sm lg:w-[50%]">
         <p className="flex items-center rounded-md bg-primary p-[10px]">
           {t("general.name")}: {user?.other?.userName}
         </p>

@@ -1,19 +1,24 @@
-import { useDarkMode } from "../context/DarkModeContext";
-import { LuSun } from "react-icons/lu";
-import { FaRegMoon } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { useDarkMode } from "../context/DarkModeContext";
 
 function DarkModeToggle() {
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [t] = useTranslation();
+  const { theme, themes, setTheme } = useDarkMode();
+
   return (
-    <div
+    <select
+      aria-label={t("theme.label")}
       title={t("descriptions.toggleLightAndDark")}
-      onClick={toggleDarkMode}
-      className="flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full bg-primary hover:text-colorBrand"
+      className="cursor-pointer rounded-xl border border-line bg-primary px-[8px] py-[6px] text-sm font-semibold text-textColor outline-none focus-visible:ring-2 focus-visible:ring-colorBrand"
+      value={theme}
+      onChange={(event) => setTheme(event.target.value)}
     >
-      {isDarkMode ? <LuSun /> : <FaRegMoon />}
-    </div>
+      {themes.map(({ id, labelKey }) => (
+        <option key={id} value={id}>
+          {t(labelKey)}
+        </option>
+      ))}
+    </select>
   );
 }
 

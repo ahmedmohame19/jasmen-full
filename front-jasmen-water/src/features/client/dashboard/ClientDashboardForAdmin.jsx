@@ -41,7 +41,7 @@ function ClientDashboardForAdmin() {
             : null;
 
     const percentage =
-        client?.consumption > 0
+        client?.consumption > 0 && client?.limit > 0
             ? ((client?.consumption / client?.limit) * 100).toFixed(0)
             : 0;
 
@@ -87,14 +87,14 @@ function ClientDashboardForAdmin() {
 
     return (
         <div className="flex flex-col gap-[20px]">
-            <div className="rounded-md bg-secondary p-[10px]">
+            <div className="surface-card p-[10px]">
                 <Heading>
                     {t("general.hello")}, {client?.userName}
                 </Heading>
             </div>
 
             {client?.charging?.length > 0 && (
-                <div className="rounded-md bg-secondary p-[10px]">
+                <div className="surface-card p-[10px]">
                     <Button
                         variant="primary"
                         className="px-4 py-2 rounded-md transition-colors duration-200 font-medium"
@@ -105,7 +105,7 @@ function ClientDashboardForAdmin() {
                 </div>
             )}
 
-            <div className={`rounded-md bg-secondary p-[10px] transition-all duration-300 ease-in-out overflow-hidden ${showCharges && client?.charging?.length > 0
+            <div className={`surface-card p-[10px] transition-all duration-300 ease-in-out overflow-hidden ${showCharges && client?.charging?.length > 0
                 ? 'max-h-[1000px] opacity-100'
                 : 'max-h-0 opacity-0 p-0'
                 }`}>
