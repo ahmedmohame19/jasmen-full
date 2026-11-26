@@ -15,10 +15,10 @@ function Profile({ id }) {
 
   return (
     <>
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <Heading>{t("account.title")}</Heading>
       </div>
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <UserPersonalData user={client} />
       </div>
     </>

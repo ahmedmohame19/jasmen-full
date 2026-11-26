@@ -14,7 +14,7 @@ import Empty from "../ui/Empty";
 function BuildingDetails() {
   const { id } = useParams();
   const [t] = useTranslation();
-  
+
   const { building, isLoading, error } = useBuildingDetails(id);
 
   if (isLoading) return <Spinner height="h-[calc(100vh-160px)]" />;
@@ -24,22 +24,22 @@ function BuildingDetails() {
   return (
     <div className="flex flex-col gap-[20px]">
       {/* Building Header */}
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <Row>
           <div className="flex items-center gap-4">
-            <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
-              <FaBuilding className="text-white text-2xl" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
+              <FaBuilding className="text-2xl text-white" />
             </div>
             <div>
               <Heading className="text-2xl">{building.buildingName}</Heading>
-              <p className="text-textColor opacity-70 mt-1">
+              <p className="mt-1 text-textColor opacity-70">
                 {t("buildings.buildingDetails")}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-colorBrand">
+              <div className="text-2xl font-bold text-brandText">
                 {building.userCount || 0}
               </div>
               <div className="text-sm text-textColor opacity-70">
@@ -54,14 +54,14 @@ function BuildingDetails() {
       <BuildingInfo building={building} />
 
       {/* Building Users */}
-      <div className="rounded-md bg-secondary p-[10px]">
-        <div className="flex items-center justify-between mb-6">
+      <div className="surface-card p-[10px]">
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-              <FaUsers className="text-white text-lg" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
+              <FaUsers className="text-lg text-white" />
             </div>
             <Heading>{t("buildings.buildingUsers")}</Heading>
-            <span className="bg-colorBrand text-white px-3 py-1 rounded-full text-sm font-medium">
+            <span className="rounded-full bg-colorBrand px-3 py-1 text-sm font-medium text-white">
               {building.users?.length || 0}
             </span>
           </div>

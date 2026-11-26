@@ -31,7 +31,8 @@ function TranslationButton() {
   return (
     <select
       title={t("descriptions.translateBtn")}
-      className="cursor-pointer rounded-sm border-none bg-secondary p-[5px] text-textColor outline-none"
+      aria-label={t("descriptions.translateBtn")}
+      className="cursor-pointer rounded-xl border border-line bg-primary px-[8px] py-[6px] text-sm font-semibold text-textColor outline-none focus-visible:ring-2 focus-visible:ring-colorBrand"
       onChange={handleChange}
       value={languageNow}
     >

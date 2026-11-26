@@ -7,6 +7,7 @@ import { MdContactSupport } from "react-icons/md";
 import { useUser } from "../../features/authentication/useUser";
 import { RiContactsFill } from "react-icons/ri";
 import { BsBuildings } from "react-icons/bs";
+import { FaMapMarkedAlt } from "react-icons/fa";
 import LogoutOutBtn from "./LogoutOutBtn";
 
 const links = [
@@ -20,6 +21,11 @@ const links = [
     title: "sidebar.buildings",
     icon: <BsBuildings />,
     to: "/buildings",
+  },
+  {
+    title: "sidebar.map",
+    icon: <FaMapMarkedAlt />,
+    to: "/buildings-map",
   },
   {
     title: "sidebar.users",
@@ -68,15 +74,15 @@ function MainNav({ closeSidebar }) {
 
   return (
     <nav className="links-list">
-      <ul className="flex flex-col gap-[10px]">
+      <ul className="flex flex-col gap-[6px]">
         {linksToDisplay?.map((link) => {
           return (
             <li title={t(link.title)} key={link.to} onClick={closeSidebar}>
               <NavLink
-                className="flex items-center gap-[15px] rounded-md bg-primary p-[13px] text-lg"
+                className="flex items-center gap-[14px] rounded-xl p-[12px] text-base font-semibold text-textColor transition-colors hover:bg-primary"
                 to={link.to}
               >
-                {link.icon}
+                <span className="text-xl">{link.icon}</span>
                 <span>{t(link.title)}</span>
               </NavLink>
             </li>

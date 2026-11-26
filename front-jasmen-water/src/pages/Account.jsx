@@ -7,7 +7,7 @@ function Account() {
 
   return (
     <div className="flex flex-col gap-[20px]">
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <Heading>{t("account.title")}</Heading>
       </div>
       <AccountInfo />

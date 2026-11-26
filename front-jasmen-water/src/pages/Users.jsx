@@ -13,7 +13,7 @@ function Users() {
 
   return (
     <div className="flex flex-col gap-[20px]">
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <Row>
           <Heading>{t("users.users")}</Heading>
           <div className="self-end">

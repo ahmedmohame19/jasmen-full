@@ -8,18 +8,18 @@ function Pagination({ count, pageCount }) {
   const [t] = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const currentPage = !searchParams.get("page")
-    ? 1
-    : Number(searchParams.get("page"));
+  const requestedPage = Number(searchParams.get("page"));
+  const currentPage =
+    Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
 
   function nextPage() {
-    const next = currentPage === pageCount ? currentPage : currentPage + 1;
+    const next = Math.min(currentPage + 1, pageCount);
     searchParams.set("page", next);
     setSearchParams(searchParams);
   }
 
   function previousPage() {
-    const prev = currentPage === 1 ? currentPage : currentPage - 1;
+    const prev = Math.max(currentPage - 1, 1);
     searchParams.set("page", prev);
     setSearchParams(searchParams);
   }
@@ -27,11 +27,7 @@ function Pagination({ count, pageCount }) {
   if (pageCount <= 1) return null;
 
   return (
-    <div
-      className={
-        "flex items-center justify-between rounded-md border-[2px] border-secondary bg-primary p-[10px]"
-      }
-    >
+    <div className={"surface-card flex items-center justify-between p-[10px]"}>
       <p className="flex gap-[4px]">
         {t("general.showing")}{" "}
         <span> {(currentPage - 1) * PAGE_SIZE + 1} </span> {t("general.to")}
@@ -46,7 +42,8 @@ function Pagination({ count, pageCount }) {
         <button
           className={`flex items-center justify-between gap-[5px] ${currentPage === 1 ? "cursor-not-allowed" : ""}`}
           onClick={previousPage}
-          disabled={currentPage === 1}
+          type="button"
+          disabled={currentPage <= 1}
         >
           <MdKeyboardArrowLeft className="text-2xl rtl:scale-[-1]" />
           <span>{t("general.previous")}</span>
@@ -55,7 +52,8 @@ function Pagination({ count, pageCount }) {
         <button
           className={`flex items-center justify-between gap-[5px] ${currentPage === pageCount ? "cursor-not-allowed" : ""}`}
           onClick={nextPage}
-          disabled={currentPage === pageCount}
+          type="button"
+          disabled={currentPage >= pageCount}
         >
           <span>{t("general.next")}</span>
           <MdKeyboardArrowRight className="text-2xl rtl:scale-[-1]" />

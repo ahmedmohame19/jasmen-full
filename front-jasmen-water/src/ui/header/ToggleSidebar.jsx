@@ -1,13 +1,18 @@
+import { useTranslation } from "react-i18next";
 import { AiOutlineBars } from "react-icons/ai";
 
 function ToggleSidebar({ toggleSidebar }) {
+  const [t] = useTranslation();
+
   return (
-    <div
+    <button
+      type="button"
       onClick={toggleSidebar}
-      className="flex cursor-pointer items-center justify-center gap-[20px] md:hidden"
+      aria-label={t("general.toggleMenu")}
+      className="flex h-[38px] w-[38px] items-center justify-center rounded-xl bg-primary text-xl md:hidden"
     >
-      <AiOutlineBars className="text-xl" />
-    </div>
+      <AiOutlineBars aria-hidden="true" />
+    </button>
   );
 }
 

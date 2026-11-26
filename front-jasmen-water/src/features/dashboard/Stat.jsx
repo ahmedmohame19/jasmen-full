@@ -1,24 +1,21 @@
 import { useTranslation } from "react-i18next";
 
-function Stat({ icon, title, value, color, description }) {
+function Stat({ icon, title, value, description }) {
   const [t] = useTranslation();
 
   return (
     <div
       title={t(description)}
-      className="flex items-center gap-[20px] rounded-md bg-secondary p-[15px]"
+      className="surface-card group flex items-center gap-[18px] p-[18px] transition-transform hover:-translate-y-[3px]"
     >
-      <div
-        style={{ backgroundColor: color }}
-        className="flex h-[40px] w-[40px] items-center justify-center rounded-full"
-      >
+      <div className="flex h-[52px] w-[52px] items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow">
         {icon}
       </div>
       <div>
-        <h5 className="text-xs font-[600] uppercase text-[#9ca3af]">
+        <h5 className="text-xs font-bold uppercase tracking-wide text-mutedText">
           {t(title)}
         </h5>
-        <p className="text-2xl font-[500]">{value}</p>
+        <p className="text-3xl font-extrabold tabular-nums">{value}</p>
       </div>
     </div>
   );

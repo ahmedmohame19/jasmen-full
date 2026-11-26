@@ -1,10 +1,11 @@
-import axios from 'axios'
+import axios from "axios";
 
-// const baseURL = import.meta.env.VITE_BASE_URL
+const DEFAULT_BASE_URL = "https://jasminewaterflow.com:5000/";
 
-export const baseURL = 'https://jasminewaterflow.com:5000/'
-// export const baseURL = 'http://localhost:3000/'
+const rawBaseURL = import.meta.env.VITE_BASE_URL || DEFAULT_BASE_URL;
+
+export const baseURL = rawBaseURL.endsWith("/") ? rawBaseURL : `${rawBaseURL}/`;
 
 export default axios.create({
-  baseURL: baseURL
-})
+  baseURL,
+});

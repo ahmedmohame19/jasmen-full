@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 function AddChargeFrom({ user, onCloseModal, socket }) {
   const { isCharging, chargeUser } = useAddChargeToUser();
   const { settings } = useSettings();
-  const { meterPrice = 0 } = settings || {};
+  const meterPrice = Number(settings?.meterPrice) || 0;
 
   const [t] = useTranslation();
 
@@ -21,22 +21,26 @@ function AddChargeFrom({ user, onCloseModal, socket }) {
   const { errors } = formState;
   const metersCount = watch("metersCount", 0);
 
+  const hasPrice = meterPrice > 0;
+
   function onSubmit(data) {
+    const newLimit = Number(data?.metersCount) + (Number(user?.limit) || 0);
+
     chargeUser(
       {
         id: user?._id,
-        money: metersCount * meterPrice,
-        limit: Number(data?.metersCount) + Number(user?.limit),
+        money: Number(data?.metersCount) * meterPrice,
+        limit: newLimit,
       },
       {
         onSuccess: () => {
           toast.success(t("users.userChargedSuccess"));
           onCloseModal?.();
           reset();
-          socket.emit("SendInitialLimit", {
+          socket?.emit("SendInitialLimit", {
             userId: user?._id,
             state: true,
-            limit: Number(data?.metersCount) + Number(user?.limit),
+            limit: newLimit,
           });
         },
         onError: () => toast.error(t("users.userChargedFailed")),
@@ -59,6 +63,8 @@ function AddChargeFrom({ user, onCloseModal, socket }) {
           validate: {
             noOnlySpaces: (value) =>
               !isOnlySpaces(value) || t("general.onlySpaces"),
+            positive: (value) =>
+              Number(value) > 0 || t("general.numbersOnly"),
           },
           pattern: {
             value: NUMBER_INPUT_REGEX,
@@ -72,8 +78,8 @@ function AddChargeFrom({ user, onCloseModal, socket }) {
         })}
       />
 
-      <p className="mt-[20px] rounded-md bg-[#6366f1] p-[5px]">
-        {t("general.totalPrice")}: {meterPrice * metersCount}
+      <p className="mt-[20px] rounded-md bg-colorBrand p-[5px] text-white">
+        {t("general.totalPrice")}: {meterPrice * (Number(metersCount) || 0)}
       </p>
 
       <div className="mt-[20px] flex w-[40%] flex-col gap-[10px] self-end">
@@ -84,7 +90,7 @@ function AddChargeFrom({ user, onCloseModal, socket }) {
         >
           {t("general.cancel")}
         </Button>
-        <Button type="submit" disabled={isCharging}>
+        <Button type="submit" disabled={isCharging || !hasPrice}>
           {t("users.addCharge")}
         </Button>
       </div>

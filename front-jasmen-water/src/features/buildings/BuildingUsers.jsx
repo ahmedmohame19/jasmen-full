@@ -6,11 +6,20 @@ import { Link } from "react-router-dom";
 import { useUser } from "../authentication/useUser";
 import { useUnassignUserFromBuilding } from "./useBuildingDetails";
 import toast from "react-hot-toast";
+import { useLiveUnits, withLiveData } from "./map/useLiveUnits";
+import { useStatusConfig } from "./map/useStatusConfig";
+import { useNow } from "../../hooks/useNow";
+import { NOW_TICK_MS } from "../../utils/constants";
+import { getUnitStatus, toUnit } from "../../utils/unitStatus";
+import StatusBadge from "./map/StatusBadge";
 
 function BuildingUsers({ users, buildingId }) {
   const [t] = useTranslation();
   const { user: currentUser } = useUser();
   const { unassignUser, isUnassigning } = useUnassignUserFromBuilding();
+  const liveUnits = useLiveUnits();
+  const { config } = useStatusConfig();
+  const now = useNow(NOW_TICK_MS);
 
   const handleUnassignUser = (userId, userName) => {
     if (window.confirm(t("buildings.unassignUserConfirm", { userName }))) {
@@ -43,7 +52,10 @@ function BuildingUsers({ users, buildingId }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {users.map((user) => (
+      {users.map((rawUser) => {
+        const user = withLiveData(rawUser, liveUnits);
+        const { status, reason } = getUnitStatus(toUnit(user), config, now);
+        return (
         <div
           key={user._id}
           className="bg-primary rounded-lg p-5 shadow-lg border border-primary hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
@@ -57,12 +69,10 @@ function BuildingUsers({ users, buildingId }) {
                 <h4 className="font-semibold text-textColor text-lg">
                   {user.userName}
                 </h4>
-                <div className="flex items-center gap-2 text-sm">
-                  <div className={`w-2 h-2 rounded-full ${user.status ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                  <span className={`text-xs font-medium ${user.status ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                    {user.status ? t("general.on") : t("general.off")}
-                  </span>
-                </div>
+                <StatusBadge
+                  status={status}
+                  detail={reason ? t(`map.reason.${reason}`) : undefined}
+                />
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -139,7 +149,8 @@ function BuildingUsers({ users, buildingId }) {
             </div>
           </div>
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

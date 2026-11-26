@@ -24,7 +24,7 @@ function ClientDashboard({ id }) {
       : null;
 
   const percentage =
-    client?.consumption > 0
+    client?.consumption > 0 && client?.limit > 0
       ? ((client?.consumption / client?.limit) * 100).toFixed(0)
       : 0;
 
@@ -33,7 +33,7 @@ function ClientDashboard({ id }) {
 
   return (
     <div className="flex flex-col gap-[20px]">
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <Heading>
           {t("general.hello")}, {client?.userName}
         </Heading>

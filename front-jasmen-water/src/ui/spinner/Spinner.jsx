@@ -1,9 +1,13 @@
-import styles from "./Spinner.module.css";
+import KemetricsMark from "../KemetricsMark";
 
 function Spinner({ height = " h-screen" }) {
   return (
-    <div className={`${height} flex items-center justify-center bg-primary`}>
-      <span className={styles.loader}></span>
+    <div
+      role="status"
+      aria-live="polite"
+      className={`${height} flex items-center justify-center`}
+    >
+      <KemetricsMark className="h-[72px] w-[58px] animate-float-y drop-shadow-lg motion-reduce:animate-none" />
     </div>
   );
 }

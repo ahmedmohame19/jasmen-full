@@ -1,12 +1,19 @@
 import { jwtDecode } from "jwt-decode";
 import { useTranslation } from "react-i18next";
 
+function decodeStoredToken() {
+  try {
+    return jwtDecode(localStorage.getItem("WATER_USER_TOKEN"));
+  } catch (error) {
+    return null;
+  }
+}
+
 function UserPersonalData({ user, id, state }) {
   const [t] = useTranslation();
-  let user2 = localStorage.getItem("WATER_USER_TOKEN")
-  let userdecoded = jwtDecode(user2)
+  const userdecoded = decodeStoredToken();
   return (
-    <div className="flex h-[380px] flex-col gap-[10px] rounded-md bg-secondary p-[10px]">
+    <div className="surface-card flex h-[380px] flex-col gap-[10px] p-[10px]">
       {userdecoded?._id === "66fad02978e3108b369748de" && (
         <p className="flex items-center bg-primary p-[8px]">
           {t("general.id")}: {id}
@@ -33,7 +40,7 @@ function UserPersonalData({ user, id, state }) {
         {t("users.roomNumber")}: {user?.roomNumber}
       </p>
 
-      {state !== null ? (
+      {state != null ? (
         <p className="flex items-center bg-primary p-[8px]">
           {t("users.status")}:{" "}
           {state === true && (

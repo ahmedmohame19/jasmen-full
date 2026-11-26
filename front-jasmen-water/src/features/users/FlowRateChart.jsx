@@ -1,13 +1,14 @@
 import { useTranslation } from "react-i18next";
+import { useChartColors } from "../../hooks/useChartColors";
 import { PieChart, Pie, Cell } from "recharts";
 
 const RADIAN = Math.PI / 180;
 const MAX_FLOW_RATE = 1024;
 
 const data = [
-  { name: "C", value: 25, color: "#6366f1" },
-  { name: "B", value: 45, color: "#4f46e5" },
-  { name: "A", value: 80, color: "#4338ca" },
+  { name: "C", value: 25, seriesIndex: 1 },
+  { name: "B", value: 45, seriesIndex: 2 },
+  { name: "A", value: 80, seriesIndex: 3 },
 ];
 
 const cx = 150;
@@ -44,6 +45,7 @@ const needle = (value, maxValue, cx, cy, iR, oR, color) => {
 
 function FlowRateChart({ flowRate = 0 }) {
   const [t] = useTranslation();
+  const chartColors = useChartColors();
 
   // Normalize flowRate to be a value between 0 and MAX_FLOW_RATE
   const normalizedFlowRate = Math.min(flowRate, MAX_FLOW_RATE); // Ensure flowRate does not exceed MAX_FLOW_RATE
@@ -65,14 +67,24 @@ function FlowRateChart({ flowRate = 0 }) {
             cy={cy}
             innerRadius={iR}
             outerRadius={oR}
-            fill="#8884d8"
             stroke="none"
           >
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
+              <Cell
+                key={`cell-${index}`}
+                fill={chartColors.series[entry.seriesIndex]}
+              />
             ))}
           </Pie>
-          {needle(normalizedFlowRate, MAX_FLOW_RATE, cx, cy, iR, oR, "#312e81")}
+          {needle(
+            normalizedFlowRate,
+            MAX_FLOW_RATE,
+            cx,
+            cy,
+            iR,
+            oR,
+            chartColors.text,
+          )}
         </PieChart>
       </div>
     </div>

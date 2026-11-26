@@ -9,7 +9,6 @@ export function useLastFiveUsersAdded() {
   } = useQuery({
     queryKey: ["LastFiveUsersAdded"],
     queryFn: lastFiveUsersAddedApi,
-    keepPreviousData: true,
   });
 
   return {

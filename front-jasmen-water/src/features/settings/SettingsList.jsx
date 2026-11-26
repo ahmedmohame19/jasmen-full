@@ -24,7 +24,7 @@ function SettingsList() {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-[10px] rounded-md bg-secondary p-[10px]">
+      <div className="flex items-center justify-between gap-[10px] surface-card p-[10px]">
         <Heading>{t("settings.pageTitle")}</Heading>
 
         <div className="w-[150px]">
@@ -32,7 +32,7 @@ function SettingsList() {
         </div>
       </div>
 
-      <form className="flex flex-col gap-[10px] rounded-md bg-secondary p-[10px]">
+      <form className="flex flex-col gap-[10px] surface-card p-[10px]">
         <div>
           <label className="mb-[7px] block text-start text-lg">
             {t("users.meterPrice")}

@@ -72,7 +72,7 @@ function RiskPerformanceTab({
   return (
     <div className="flex flex-col gap-6">
       {/* Sub-tabs */}
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <div className="flex items-center gap-2 border-b border-primary overflow-x-auto">
           {subTabs.map((tab) => {
             const Icon = tab.icon;
@@ -102,7 +102,7 @@ function RiskPerformanceTab({
           ) : (
             <>
               {/* Controls - Always visible */}
-              <div className="rounded-md bg-secondary p-[10px]">
+              <div className="surface-card p-[10px]">
                 <div className="flex flex-col gap-4">
                   {/* Date Range Picker */}
                   <DateRangePicker
@@ -144,7 +144,7 @@ function RiskPerformanceTab({
 
               {/* Current Period Info */}
               {riskData?.period && (
-                <div className="rounded-md bg-secondary p-[10px]">
+                <div className="surface-card p-[10px]">
                   <div className="flex flex-wrap items-center gap-4 text-sm">
                     <div className="flex items-center gap-2 text-textColor">
                       <FaCalendarAlt className="opacity-70" />
@@ -245,7 +245,7 @@ function RiskPerformanceTab({
 
                   {/* Statistics Overview */}
                   {riskData.riskAssessment.statistics && (
-                    <div className="rounded-md bg-secondary p-[10px]">
+                    <div className="surface-card p-[10px]">
                       <h4 className="font-semibold text-textColor mb-4 flex items-center gap-2">
                         {t("users.statistics") || "Statistics Overview"}
                         <Tooltip content={t("users.statisticsOverviewTooltip") || "Key statistical measures for risk assessment"}>
@@ -476,7 +476,7 @@ function RiskPerformanceTab({
                   {riskData.recommendations && riskData.recommendations.length > 0 && (
                     <div className="bg-primary rounded-lg p-4">
                       <h4 className="font-semibold text-textColor mb-2 flex items-center gap-2">
-                        <FaCheckCircle className="text-colorBrand" />
+                        <FaCheckCircle className="text-brandText" />
                         {t("users.recommendations") || "Recommendations"}
                         <Tooltip content={t("users.recommendationsTooltip") || "Actionable recommendations based on identified risks and anomalies"}>
                           <FaInfoCircle className="text-xs cursor-help opacity-70" />
@@ -485,7 +485,7 @@ function RiskPerformanceTab({
                       <ul className="space-y-2">
                         {riskData.recommendations.map((rec, index) => (
                           <li key={index} className="text-textColor text-sm flex items-start gap-2">
-                            <span className="text-colorBrand mt-1">•</span>
+                            <span className="text-brandText mt-1">•</span>
                             <span>{rec}</span>
                           </li>
                         ))}
@@ -516,7 +516,7 @@ function RiskPerformanceTab({
 
               {/* Performance Metrics Data - Only show if hasData is true */}
               {performanceData && performanceData.hasData !== false && (
-                <div className="rounded-md bg-secondary p-[10px]">
+                <div className="surface-card p-[10px]">
                   <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
                     <FaChartLine />
                     {t("users.performanceMetrics")}

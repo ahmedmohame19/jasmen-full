@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useChartColors } from "../../hooks/useChartColors";
 import {
   FaEye,
   FaNetworkWired,
@@ -36,6 +37,7 @@ function AdvancedAnalysisTab({
   benchmarkData,
   benchmarkLoading,
 }) {
+  const chartColors = useChartColors();
   const [t] = useTranslation();
   const [activeSubTab, setActiveSubTab] = useState("forecast");
 
@@ -85,7 +87,7 @@ function AdvancedAnalysisTab({
   return (
     <div className="flex flex-col gap-6">
       {/* Sub-tabs */}
-      <div className="rounded-md bg-secondary p-[10px]">
+      <div className="surface-card p-[10px]">
         <div className="flex items-center gap-2 border-b border-primary overflow-x-auto">
           {subTabs.map((tab) => {
             const Icon = tab.icon;
@@ -116,7 +118,7 @@ function AdvancedAnalysisTab({
             <Empty message={forecastData?.message || "No forecast data available. Need at least 7 days of historical data for forecasting."} />
           ) : (
             <>
-              <div className="rounded-md bg-secondary p-[10px]">
+              <div className="surface-card p-[10px]">
               <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
                 <FaEye />
                 {t("users.forecast")}
@@ -244,7 +246,7 @@ function AdvancedAnalysisTab({
           ) : !correlationData || correlationData.hasData === false ? (
             <Empty message={correlationData?.message || "No correlation data available. Need at least 5 data points for correlation analysis."} />
           ) : (
-            <div className="rounded-md bg-secondary p-[10px]">
+            <div className="surface-card p-[10px]">
               <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
                 <FaNetworkWired />
                 {t("users.correlation")}
@@ -293,7 +295,7 @@ function AdvancedAnalysisTab({
                   <ul className="space-y-2">
                     {correlationData.insights.keyFindings?.map((finding, index) => (
                       <li key={index} className="text-textColor text-sm flex items-start gap-2">
-                        <span className="text-colorBrand">•</span>
+                        <span className="text-brandText">•</span>
                         <span>{finding}</span>
                       </li>
                     ))}
@@ -313,12 +315,12 @@ function AdvancedAnalysisTab({
           ) : (
             <>
               {/* Controls - Always visible */}
-              <div className="rounded-md bg-secondary p-[10px]">
+              <div className="surface-card p-[10px]">
                 <div className="flex flex-col gap-4">
                   {/* Period Type Selector */}
                   <div className="flex flex-wrap items-center gap-4">
                     <label className="text-textColor font-medium flex items-center gap-2">
-                      <FaCalendarAlt className="text-colorBrand" />
+                      <FaCalendarAlt className="text-brandText" />
                       {t("users.groupByPeriod") || "Group By Period"}:
                     </label>
                     <select
@@ -375,7 +377,7 @@ function AdvancedAnalysisTab({
 
               {/* Current Period Info */}
               {seasonalityData?.dateRange && (
-                <div className="rounded-md bg-secondary p-[10px]">
+                <div className="surface-card p-[10px]">
                   <div className="flex flex-wrap items-center gap-4 text-sm">
                     <div className="flex items-center gap-2 text-textColor">
                       <FaCalendarAlt className="opacity-70" />
@@ -444,7 +446,7 @@ function AdvancedAnalysisTab({
 
                   {/* Seasonal Pattern Chart */}
                   {seasonalityChartData && (
-                    <div className="rounded-md bg-secondary p-[10px]">
+                    <div className="surface-card p-[10px]">
                       <h4 className="font-semibold text-textColor mb-3 flex items-center gap-2">
                         <FaChartLine />
                         {t("users.seasonalPatternChart") || "Seasonal Pattern"}
@@ -466,24 +468,24 @@ function AdvancedAnalysisTab({
                             labels: {
                               rotate: -45,
                               rotateAlways: false,
-                              style: { colors: "#9ca3af" },
+                              style: { colors: chartColors.axis },
                             },
                           },
                           yaxis: {
                             title: { text: t("users.consumption") },
-                            labels: { style: { colors: "#9ca3af" } },
+                            labels: { style: { colors: chartColors.axis } },
                           },
                           legend: {
                             position: "top",
-                            labels: { colors: "#9ca3af" },
+                            labels: { colors: chartColors.axis },
                           },
                           tooltip: {
-                            theme: "dark",
+                            theme: chartColors.colorScheme,
                             shared: true,
                             intersect: false,
                             style: { fontSize: "12px" },
                           },
-                          colors: ["#3b82f6", "#10b981"],
+                          colors: [chartColors.series[0], chartColors.series[1]],
                           markers: { size: 4 },
                         }}
                         series={[
@@ -504,7 +506,7 @@ function AdvancedAnalysisTab({
 
                   {/* Seasonal Pattern Table */}
                   {seasonalityData.seasonalPattern && seasonalityData.seasonalPattern.length > 0 && (
-                    <div className="rounded-md bg-secondary p-[10px]">
+                    <div className="surface-card p-[10px]">
                       <h4 className="font-semibold text-textColor mb-4">{t("users.seasonalPattern") || "Seasonal Pattern Details"}</h4>
                       <div className="overflow-x-auto">
                         <table className="w-full">
@@ -715,7 +717,7 @@ function AdvancedAnalysisTab({
           ) : !benchmarkData || benchmarkData.hasData === false ? (
             <Empty message={benchmarkData?.message || "No benchmark data available. Consumption data is required for comparison."} />
           ) : (
-            <div className="rounded-md bg-secondary p-[10px]">
+            <div className="surface-card p-[10px]">
               <h3 className="text-lg font-semibold text-textColor mb-4 flex items-center gap-2">
                 <FaMedal />
                 {t("users.benchmark")}
@@ -846,7 +848,7 @@ function AdvancedAnalysisTab({
                   <ul className="space-y-2">
                     {benchmarkData.recommendations.map((rec, index) => (
                       <li key={index} className="text-textColor text-sm flex items-start gap-2">
-                        <span className="text-colorBrand">•</span>
+                        <span className="text-brandText">•</span>
                         <span>{rec}</span>
                       </li>
                     ))}

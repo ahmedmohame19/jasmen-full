@@ -9,7 +9,6 @@ export function useHighFiveUsersCharging() {
   } = useQuery({
     queryKey: ["highFiveUsersCharging"],
     queryFn: highFiveUsersChargingApi,
-    keepPreviousData: true,
   });
 
   return {

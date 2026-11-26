@@ -10,22 +10,24 @@ import {
 } from "recharts";
 import { useUsers } from "./useUsers";
 import { useTranslation } from "react-i18next";
+import { useChartColors } from "../../hooks/useChartColors";
 import Spinner from "../../ui/spinner/Spinner";
 import Empty from "../../ui/Empty";
 import Pagination from "../../ui/Pagination";
 
 function UsersStatisticChart() {
+  const chartColors = useChartColors();
   const { i18n, t } = useTranslation();
   const { isLoading, users, totalPages, count, error } = useUsers();
   const isRTL = i18n.language === "ar";
 
   if (isLoading) return <Spinner height="h-[calc(100vh-160px)]" />;
-  if (!users?.length) return <Empty message={t("users.noUsers")} />;
   if (error) return <Empty message={t("general.failedToGetData")} />;
+  if (!users?.length) return <Empty message={t("users.noUsers")} />;
 
   // Aggregating data for the chart
   const chartData = users.map((user) => {
-    const totalCharging = user.charging.reduce(
+    const totalCharging = (user.charging ?? []).reduce(
       (acc, charge) => acc + charge.money,
       0,
     );
@@ -40,7 +42,7 @@ function UsersStatisticChart() {
   return (
     <div
       title={t("descriptions.usersStatistic")}
-      className="h-[500px] rounded-md bg-secondary p-[10px]"
+      className="h-[500px] surface-card p-[10px]"
     >
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
@@ -56,12 +58,12 @@ function UsersStatisticChart() {
         >
           <defs>
             <linearGradient id="colorCharging" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
+              <stop offset="5%" stopColor={chartColors.series[0]} stopOpacity={0.8} />
+              <stop offset="95%" stopColor={chartColors.series[0]} stopOpacity={0} />
             </linearGradient>
             <linearGradient id="colorConsumption" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#c7d2fe" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#c7d2fe" stopOpacity={0} />
+              <stop offset="5%" stopColor={chartColors.series[2]} stopOpacity={0.8} />
+              <stop offset="95%" stopColor={chartColors.series[2]} stopOpacity={0} />
             </linearGradient>
           </defs>
           <XAxis
@@ -69,22 +71,28 @@ function UsersStatisticChart() {
             reversed={isRTL}
             tickLine={false}
             axisLine={false}
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 12, fill: chartColors.axis }}
           />
           <YAxis
+            tick={chartColors.axisTick}
+            stroke={chartColors.axis}
             orientation={isRTL ? "right" : "left"}
             tickCount={5}
             mirror={isRTL}
             dx={isRTL ? 15 : 0}
           />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend verticalAlign="bottom" height={36} />
+          <CartesianGrid strokeDasharray="3 3" stroke={chartColors.grid} />
+          <Tooltip contentStyle={chartColors.tooltipStyle} />
+          <Legend
+            verticalAlign="bottom"
+            height={36}
+            wrapperStyle={{ color: chartColors.text }}
+          />
           <Area
             type="monotone"
             dataKey="totalCharging"
             name={t("users.chargingMoney")}
-            stroke="#4f46e5"
+            stroke={chartColors.series[0]}
             fillOpacity={1}
             fill="url(#colorCharging)"
           />
@@ -92,7 +100,7 @@ function UsersStatisticChart() {
             type="monotone"
             dataKey="consumption"
             name={t("users.consumption")}
-            stroke="#c7d2fe"
+            stroke={chartColors.series[2]}
             fillOpacity={1}
             fill="url(#colorConsumption)"
           />

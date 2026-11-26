@@ -1,22 +1,22 @@
 import { useTranslation } from "react-i18next";
 import { useSettings } from "../settings/useSettings";
-import logo from "/jasmine.jpeg";
+import KemetricsMark from "../../ui/KemetricsMark";
 
 function UserBill({ user, onCloseModal }) {
   const { t: translate } = useTranslation();
   const { settings } = useSettings();
 
-  const { meterPrice = 0 } = settings?.[0] || {};
-  const lastCharge = user?.limit * meterPrice;
-  console.log(user);
+  const meterPrice = Number(settings?.meterPrice) || 0;
+  const lastCharge = (Number(user?.limit) || 0) * meterPrice;
+  const totalChargingMoney = Number(user?.totalChargingMoney) || 0;
   const total =
     user?.tax?.reduce((acc, curr) => Number(acc) + Number(curr.value), 0) || 0;
 
   return (
     <div className="flex flex-col gap-[20px] rounded-md bg-[#f3f4f6] p-[10px] text-[#111827]">
       <div className="flex items-center justify-between">
-        <img src={logo} alt="logo" className="w-[200px] rounded-full" />
-        <h2 className="text-xl font-[500] uppercase">Swan</h2>
+        <KemetricsMark className="h-[64px] w-[51px]" />
+        <h2 className="text-xl font-[500] uppercase">Kemetrics</h2>
       </div>
 
       <h1 className="border-b border-[#111827] pb-[5px] text-center text-2xl font-[500]">
@@ -32,7 +32,7 @@ function UserBill({ user, onCloseModal }) {
         <div className="flex items-center justify-between border-b border-[#ccc] py-[3px]">
           <span>{translate("users.consumption")}</span>
           <span>
-            {user?.totalChargingMoney} {translate("general.EGP")}
+            {totalChargingMoney} {translate("general.EGP")}
           </span>
         </div>
 
@@ -54,7 +54,7 @@ function UserBill({ user, onCloseModal }) {
       <div className="flex items-center justify-between text-lg font-[500]">
         <span>{translate("users.totalMoney")}</span>
         <span>
-          {total + lastCharge + user?.totalChargingMoney} {translate("general.EGP")}
+          {total + lastCharge + totalChargingMoney} {translate("general.EGP")}
         </span>
       </div>
     </div>

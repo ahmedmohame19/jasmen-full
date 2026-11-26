@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useChartColors } from "../../../hooks/useChartColors";
 
 import {
   ComposedChart,
@@ -11,8 +12,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Charges({ charges }) {
+function Charges({ charges = [] }) {
   const { i18n, t } = useTranslation();
+  const chartColors = useChartColors();
   const isRTL = i18n.language === "ar";
 
   const chartData = charges.map((item) => ({
@@ -21,7 +23,7 @@ function Charges({ charges }) {
   }));
 
   return (
-    <div className="h-[380px] w-full rounded-md bg-secondary p-[10px] lg:w-[50%]">
+    <div className="h-[380px] w-full surface-card p-[10px] lg:w-[50%]">
       <div className="flex items-center justify-between">
         <h2 className="text-lg">{t("users.UserCharges")}</h2>
       </div>
@@ -36,17 +38,27 @@ function Charges({ charges }) {
             left: isRTL ? 5 : 5,
           }}
         >
-          <CartesianGrid stroke="#f5f5f5" />
-          <XAxis dataKey="name" />
+          <CartesianGrid stroke={chartColors.grid} />
+          <XAxis
+            dataKey="name"
+            tick={chartColors.axisTick}
+            stroke={chartColors.axis}
+          />
           <YAxis
+            tick={chartColors.axisTick}
+            stroke={chartColors.axis}
             orientation={isRTL ? "right" : "left"}
             tickCount={5}
             mirror={isRTL}
             dx={isRTL ? 15 : 0}
           />
-          <Tooltip />
-          <Bar dataKey="money" barSize={20} fill="#4338ca" />
-          <Line type="monotone" dataKey="money" stroke="#6366f1" />
+          <Tooltip contentStyle={chartColors.tooltipStyle} />
+          <Bar dataKey="money" barSize={20} fill={chartColors.series[0]} />
+          <Line
+            type="monotone"
+            dataKey="money"
+            stroke={chartColors.series[2]}
+          />
         </ComposedChart>
       </ResponsiveContainer>
     </div>

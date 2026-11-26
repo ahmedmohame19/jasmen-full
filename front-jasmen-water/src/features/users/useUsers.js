@@ -1,11 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { getUsers } from "../../services/apiUsers";
 
 export function useUsers() {
   const [searchParams] = useSearchParams();
 
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  const requestedPage = Number(searchParams.get("page"));
+  const page =
+    Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
 
   const {
     isPending: isLoading,
@@ -14,7 +16,7 @@ export function useUsers() {
   } = useQuery({
     queryKey: ["UsersData", page],
     queryFn: () => getUsers(page),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   return {

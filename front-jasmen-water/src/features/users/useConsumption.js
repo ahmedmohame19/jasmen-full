@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+
 import {
   getConsumptionByPeriod,
   getConsumptionAnalysis,
@@ -15,6 +16,11 @@ import {
   getPumpOperationOptimization,
 } from "../../services/apiUsers";
 
+function keepDataForSameUser(userId) {
+  return (previousData, previousQuery) =>
+    previousQuery?.queryKey?.[1] === userId ? previousData : undefined;
+}
+
 export function useConsumptionByPeriod(userId, params = {}) {
   const {
     isPending: isLoading,
@@ -24,6 +30,7 @@ export function useConsumptionByPeriod(userId, params = {}) {
     queryKey: ["consumptionByPeriod", userId, params],
     queryFn: () => getConsumptionByPeriod(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return {
@@ -42,6 +49,7 @@ export function useConsumptionAnalysis(userId, params = {}) {
     queryKey: ["consumptionAnalysis", userId, params],
     queryFn: () => getConsumptionAnalysis(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return {
@@ -60,6 +68,7 @@ export function useConsumptionForecast(userId, params = {}) {
     queryKey: ["consumptionForecast", userId, params],
     queryFn: () => getConsumptionForecast(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -74,6 +83,7 @@ export function useConsumptionCorrelation(userId, params = {}) {
     queryKey: ["consumptionCorrelation", userId, params],
     queryFn: () => getConsumptionCorrelation(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -88,6 +98,7 @@ export function useConsumptionSeasonality(userId, params = {}) {
     queryKey: ["consumptionSeasonality", userId, params],
     queryFn: () => getConsumptionSeasonality(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -102,6 +113,7 @@ export function useConsumptionBenchmark(userId, params = {}) {
     queryKey: ["consumptionBenchmark", userId, params],
     queryFn: () => getConsumptionBenchmark(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -116,6 +128,7 @@ export function useConsumptionRiskAssessment(userId, params = {}) {
     queryKey: ["consumptionRiskAssessment", userId, params],
     queryFn: () => getConsumptionRiskAssessment(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -130,6 +143,7 @@ export function useConsumptionPerformanceMetrics(userId, params = {}) {
     queryKey: ["consumptionPerformanceMetrics", userId, params],
     queryFn: () => getConsumptionPerformanceMetrics(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -144,6 +158,7 @@ export function usePumpEfficiencyAnalysis(userId, params = {}) {
     queryKey: ["pumpEfficiencyAnalysis", userId, params],
     queryFn: () => getPumpEfficiencyAnalysis(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -158,6 +173,7 @@ export function useLeakDetectionAnalysis(userId, params = {}) {
     queryKey: ["leakDetectionAnalysis", userId, params],
     queryFn: () => getLeakDetectionAnalysis(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -172,6 +188,7 @@ export function usePumpCycleAnalysis(userId, params = {}) {
     queryKey: ["pumpCycleAnalysis", userId, params],
     queryFn: () => getPumpCycleAnalysis(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -186,6 +203,7 @@ export function usePumpHealthMonitoring(userId, params = {}) {
     queryKey: ["pumpHealthMonitoring", userId, params],
     queryFn: () => getPumpHealthMonitoring(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };
@@ -200,6 +218,7 @@ export function usePumpOperationOptimization(userId, params = {}) {
     queryKey: ["pumpOperationOptimization", userId, params],
     queryFn: () => getPumpOperationOptimization(userId, params),
     enabled: !!userId,
+    placeholderData: keepDataForSameUser(userId),
   });
 
   return { isLoading, data, error };

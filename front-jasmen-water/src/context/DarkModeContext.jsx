@@ -1,30 +1,60 @@
-import { createContext, useContext, useEffect } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+} from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
+import {
+  getInitialTheme,
+  getThemeDefinition,
+  isKnownTheme,
+  THEME_STORAGE_KEY,
+  THEMES,
+} from "./themes";
 
-const DarkModeContext = createContext();
+const DarkModeContext = createContext(undefined);
 
 function DarkModeProvider({ children }) {
-  const [isDarkMode, setTsDarkMode] = useLocalStorageState(
-    window.matchMedia("(prefers-color-scheme: dark)").matches,
-    "isDarkMode"
+  const [storedTheme, setTheme] = useLocalStorageState(
+    getInitialTheme(),
+    THEME_STORAGE_KEY,
   );
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark-mode");
-      document.documentElement.classList.remove("light-mode");
-    } else {
-      document.documentElement.classList.add("light-mode");
-      document.documentElement.classList.remove("dark-mode");
-    }
-  }, [isDarkMode]);
+  const theme = getThemeDefinition(
+    isKnownTheme(storedTheme) ? storedTheme : "",
+  );
+  const isDarkMode = theme.colorScheme === "dark";
 
-  function toggleDarkMode() {
-    setTsDarkMode((darkMode) => !darkMode);
-  }
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    THEMES.forEach(({ id }) => root.classList.remove(`theme-${id}`));
+    root.classList.add(`theme-${theme.id}`);
+    root.setAttribute("data-color-scheme", theme.colorScheme);
+  }, [theme]);
+
+  const toggleDarkMode = useCallback(() => {
+    setTheme((currentTheme) =>
+      getThemeDefinition(currentTheme).colorScheme === "dark"
+        ? "light"
+        : "dark",
+    );
+  }, [setTheme]);
+
+  const value = useMemo(
+    () => ({
+      theme: theme.id,
+      themes: THEMES,
+      setTheme,
+      isDarkMode,
+      toggleDarkMode,
+    }),
+    [theme.id, setTheme, isDarkMode, toggleDarkMode],
+  );
 
   return (
-    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+    <DarkModeContext.Provider value={value}>
       {children}
     </DarkModeContext.Provider>
   );
@@ -32,7 +62,7 @@ function DarkModeProvider({ children }) {
 
 function useDarkMode() {
   const context = useContext(DarkModeContext);
-  if (context === "undefined") {
+  if (context === undefined) {
     throw new Error("Dark Mode Context Was Used OutSide Dark Mode Provider");
   }
   return context;

@@ -1,6 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Inter:wght@100..900&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,49 +8,166 @@
   box-sizing: border-box;
 }
 
-
 *[dir="ltr"] body {
-  font-family: Inter, sans-serif;
+  font-family:
+    "Plus Jakarta Sans Variable", "Readex Pro Variable", system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
 }
 
 *[dir="rtl"] body {
-  font-family: Cairo, sans-serif;
+  font-family:
+    "Readex Pro Variable", "Plus Jakarta Sans Variable", system-ui, sans-serif;
 }
 
-@layer base {
-  :root {
-    &,
-    &.light-mode {
-      /* Grey */
-      --color-grey-0: #fff;
-      --color-grey-50: #f3f4f6;
-      --color-grey-900: #111827;
-    }
+*[dir="rtl"] * {
+  letter-spacing: normal !important;
+}
 
-    &.dark-mode {
-      /* --color-grey-0: #1d1d1f;
-      --color-grey-50: #07070b; */
-      --color-grey-0: #18212f;
-      --color-grey-50: #111827;
-      --color-grey-100: #1f2937;
-      --color-grey-900: #f9fafb;
-    }
+body {
+  min-height: 100vh;
+  background: var(--page-bg);
+  background-attachment: fixed;
+  color: var(--color-grey-900);
+}
 
-    /* Indigo */
-    --color-brand-50: #eef2ff;
-    --color-brand-100: #e0e7ff;
-    --color-brand-200: #c7d2fe;
-    --color-brand-500: #6366f1;
-    --color-brand-600: #4f46e5;
-    --color-brand-700: #4338ca;
-    --color-brand-800: #3730a3;
-    --color-brand-900: #312e81;
-  }
+:root {
+  --color-brand-50: #eef5ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #1b5fdc;
+  --color-brand-700: #1649b5;
+  --color-brand-800: #12327f;
+  --color-brand-900: #0b2a6b;
+  --color-accent: #1fb5e6;
+  --color-accent-rgb: 31 181 230;
+  --color-brand-rgb: 27 95 220;
+
+  --status-leak-bg: #dc2626;
+  --status-leak-fg: #ffffff;
+  --status-leak-blink-off: #7f1d1d;
+  --status-leak-ring: #fca5a5;
+  --status-inactive-bg: #4b5563;
+  --status-inactive-fg: #ffffff;
+  --status-low-bg: #facc15;
+  --status-low-fg: #111827;
+  --status-ok-bg: #15803d;
+  --status-ok-fg: #ffffff;
+}
+
+:root,
+:root.theme-light {
+  color-scheme: light;
+  --color-grey-0: #ffffff;
+  --color-grey-50: #eaf3ff;
+  --color-grey-100: #dbe9fb;
+  --color-grey-900: #0b1f4d;
+  --color-text-muted: #475a7d;
+  --color-border: #c9daf1;
+  --color-secondary: var(--color-grey-0);
+  --color-brand-text: #1b5fdc;
+  --color-glass: rgb(255 255 255 / 0.78);
+  --page-bg:
+    radial-gradient(1100px 520px at 85% -10%, rgb(31 181 230 / 0.22), transparent 60%),
+    radial-gradient(900px 480px at -10% 10%, rgb(27 95 220 / 0.16), transparent 60%),
+    linear-gradient(180deg, #f4f9ff 0%, #e4f0ff 100%);
+  --gradient-brand: linear-gradient(135deg, #0b2a6b 0%, #1b5fdc 58%, #1b78cf 100%);
+  --gradient-hero: linear-gradient(135deg, #0b2a6b 0%, #144bb8 55%, #1b78cf 100%);
+  --shadow-card: 0 10px 30px -12px rgb(11 42 107 / 0.25);
+  --shadow-glow: 0 12px 34px -10px rgb(27 95 220 / 0.55);
+  --building-body: #ffffff;
+  --building-edge: #b7cdec;
+  --building-sky: #dcecff;
+  --chart-grid: #c9daf1;
+  --chart-axis: #475a7d;
+  --chart-1: #1b5fdc;
+  --chart-2: #0e7490;
+  --chart-3: #b45309;
+  --chart-4: #be123c;
+  --chart-5: #15803d;
+  --chart-6: #7c3aed;
+}
+
+:root.theme-dark {
+  color-scheme: dark;
+  --color-grey-0: #0e2250;
+  --color-grey-50: #081538;
+  --color-grey-100: #152f6b;
+  --color-grey-900: #f2f7ff;
+  --color-text-muted: #bcd0f2;
+  --color-border: #25448f;
+  --color-brand-600: #2563eb;
+  --color-brand-text: #8dbcff;
+  --color-accent: #38c7f2;
+  --color-accent-rgb: 56 199 242;
+  --color-brand-rgb: 37 99 235;
+  --color-glass: rgb(14 34 80 / 0.72);
+  --page-bg:
+    radial-gradient(1100px 520px at 85% -10%, rgb(31 181 230 / 0.2), transparent 60%),
+    radial-gradient(900px 480px at -10% 10%, rgb(37 99 235 / 0.25), transparent 60%),
+    linear-gradient(180deg, #091a44 0%, #050f2b 100%);
+  --gradient-brand: linear-gradient(135deg, #1b3f9c 0%, #2563eb 58%, #1a74c8 100%);
+  --gradient-hero: linear-gradient(135deg, #0a2158 0%, #1546b0 55%, #1a74c8 100%);
+  --shadow-card: 0 12px 32px -14px rgb(0 0 0 / 0.7);
+  --shadow-glow: 0 12px 34px -10px rgb(56 199 242 / 0.4);
+  --building-body: #12296b;
+  --building-edge: #31509f;
+  --building-sky: #0a1d52;
+  --status-inactive-bg: #6b7280;
+  --chart-grid: #25448f;
+  --chart-axis: #bcd0f2;
+  --chart-1: #7db4ff;
+  --chart-2: #22d3ee;
+  --chart-3: #fbbf24;
+  --chart-4: #fb7185;
+  --chart-5: #4ade80;
+  --chart-6: #c4b5fd;
+}
+
+:root.theme-ocean {
+  color-scheme: dark;
+  --color-grey-0: #0a3a54;
+  --color-grey-50: #062434;
+  --color-grey-100: #0f4d6e;
+  --color-grey-900: #e8f8ff;
+  --color-text-muted: #bde8fb;
+  --color-border: #1e6a8d;
+  --color-brand-500: #0ea5c9;
+  --color-brand-600: #0b7ea3;
+  --color-brand-text: #6fe3ff;
+  --color-accent: #4dd8ff;
+  --color-accent-rgb: 77 216 255;
+  --color-brand-rgb: 11 126 163;
+  --color-glass: rgb(10 58 84 / 0.72);
+  --page-bg:
+    radial-gradient(1100px 520px at 85% -10%, rgb(77 216 255 / 0.22), transparent 60%),
+    radial-gradient(900px 480px at -10% 10%, rgb(14 165 201 / 0.2), transparent 60%),
+    linear-gradient(180deg, #08334a 0%, #04202f 100%);
+  --gradient-brand: linear-gradient(135deg, #0a4f73 0%, #0b7ea3 58%, #0e7c9f 100%);
+  --gradient-hero: linear-gradient(135deg, #07334c 0%, #0a6b8f 55%, #0e7c9f 100%);
+  --shadow-card: 0 12px 32px -14px rgb(0 0 0 / 0.65);
+  --shadow-glow: 0 12px 34px -10px rgb(77 216 255 / 0.4);
+  --building-body: #0d4766;
+  --building-edge: #2a82a8;
+  --building-sky: #07304a;
+  --status-inactive-bg: #6b7280;
+  --chart-grid: #1e6a8d;
+  --chart-axis: #bde8fb;
+  --chart-1: #6fe3ff;
+  --chart-2: #fcd34d;
+  --chart-3: #fda4af;
+  --chart-4: #86efac;
+  --chart-5: #a5b4fc;
+  --chart-6: #f0abfc;
 }
 
 @layer components {
   .form-input {
-    @apply w-full rounded-md border border-[#eee] bg-primary p-[10px] text-textColor outline-none transition-all placeholder:text-sm focus:border-colorBrand;
+    @apply w-full rounded-xl border border-line bg-primary p-[10px] text-textColor outline-none transition-all placeholder:text-sm focus:border-colorBrand focus:ring-2 focus:ring-colorBrand/30;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border border-line bg-glass shadow-card backdrop-blur-md;
   }
 
   .action-style {
@@ -63,7 +177,9 @@
 
 /* add styles to active link */
 .links-list a.active {
-  background-color: var(--color-brand-600);
+  background-image: var(--gradient-brand);
+  color: #ffffff;
+  box-shadow: var(--shadow-glow);
 }
 
 /* scrollbar Syles */
@@ -76,7 +192,9 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--color-brand-600);
+  background-image: var(--gradient-brand);
+  color: #ffffff;
+  box-shadow: var(--shadow-glow);
 }
 
 /* Vertical scrollbar */

@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useChartColors } from "../../hooks/useChartColors";
 import { useHighFiveUsersCharging } from "./useHighFiveUsersCharging";
 import {
   ResponsiveContainer,
@@ -17,6 +18,7 @@ import Empty from "../../ui/Empty";
 import Heading from "../../ui/Heading";
 
 function HighFiveUsersCharging() {
+  const chartColors = useChartColors();
   const { i18n, t } = useTranslation();
   const { isLoading, highFiveUsersCharging, error } =
     useHighFiveUsersCharging();
@@ -40,7 +42,7 @@ function HighFiveUsersCharging() {
   return (
     <div
       title={t("descriptions.highConsumersChart")}
-      className="h-[400px] rounded-md bg-secondary p-[10px]"
+      className="surface-card h-[400px] p-[10px]"
     >
       <div className="mb-[15px]">
         <Heading>{t("users.highFiveUsersCharging")}</Heading>
@@ -56,51 +58,77 @@ function HighFiveUsersCharging() {
             left: isRTL ? 5 : 5,
           }}
         >
-          <CartesianGrid stroke="#f5f5f5" />
+          <CartesianGrid stroke={chartColors.grid} />
 
           <XAxis
             dataKey="name"
             reversed={isRTL}
             tickLine={false}
             axisLine={false}
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 12, fill: chartColors.axis }}
           />
 
           <YAxis
+            tick={chartColors.axisTick}
+            stroke={chartColors.axis}
             orientation={isRTL ? "right" : "left"}
             tickCount={5}
             mirror={isRTL}
             dx={isRTL ? 15 : 0}
           />
 
-          <Tooltip />
+          <Tooltip contentStyle={chartColors.tooltipStyle} />
           <Legend
             layout="horizontal"
             align="center"
             verticalAlign="bottom"
-            wrapperStyle={{ lineHeight: "40px" }}
+            wrapperStyle={{ lineHeight: "40px", color: chartColors.text }}
             payload={[
-              { value: t("users.totalMoney"), type: "rect", color: "#4f46e5" },
+              {
+                value: t("users.totalMoney"),
+                type: "rect",
+                color: chartColors.series[0],
+              },
               {
                 value: t("users.chargingMoney"),
                 type: "rect",
-                color: "#6366f1",
+                color: chartColors.series[1],
               },
-              { value: t("users.consumption"), type: "line", color: "#c7d2fe" },
+              {
+                value: t("users.consumption"),
+                type: "line",
+                color: chartColors.series[2],
+              },
             ]}
           />
           <Area
             type="basis"
             dataKey="totalMoney"
             fill="url(#colorGradient)"
-            stroke="#4f46e5"
+            stroke={chartColors.series[0]}
           />
-          <Bar dataKey="chargingMoney" barSize={20} fill="#6366f1" />
-          <Line type="monotone" dataKey="consumption" stroke="#c7d2fe" />
+          <Bar
+            dataKey="chargingMoney"
+            barSize={20}
+            fill={chartColors.series[1]}
+          />
+          <Line
+            type="monotone"
+            dataKey="consumption"
+            stroke={chartColors.series[2]}
+          />
           <defs>
             <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#4f46e5" stopOpacity={0.8} />
-              <stop offset="100%" stopColor="#6366f1" stopOpacity={0.2} />
+              <stop
+                offset="0%"
+                stopColor={chartColors.series[0]}
+                stopOpacity={0.8}
+              />
+              <stop
+                offset="100%"
+                stopColor={chartColors.series[1]}
+                stopOpacity={0.2}
+              />
             </linearGradient>
           </defs>
         </ComposedChart>
